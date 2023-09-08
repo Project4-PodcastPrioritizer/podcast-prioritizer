@@ -1,11 +1,16 @@
+//axios -> api calling import
 import axios from "axios";
+// react imports
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-
+//styling imports
 import './PodcastSearch.css';
 import './SetUp.css';
-
+// animations from react-spring
+import { useTransition, animated } from "react-spring";
+// font awesome icon imports 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+// font awesome declarations
 const searchIcon = <FontAwesomeIcon icon={faMagnifyingGlass} size="xs"/>
 
 
@@ -18,11 +23,17 @@ const PodcastSearch = ({setPodcast,setLength}) =>{
     const [dataFound,setDataFound] = useState(null); // if user query yields results or not
     const [loading, setLoading] = useState(null); // displays loading animation while api call being made
 
-    // KEY INFORMATION STATES
+    // PASS TO PARENT  STATES
     const [selectedPodcast, setSelectedPodcast] = useState([]) // selected podcasts object from podcastResults
 
-
-   
+    // MOUNTING STATES
+    const [isVisible, setIsVisible] = useState(false)
+    const mountedTransition = useTransition(isVisible,{
+        config:{duration:200}, // .2s animation time.
+        from:{x:0,y:-50,opacity:0},
+        enter:{x:0,y:0,opacity:1},
+        leave:{x:0,y:50,opacity:0}
+    });
     const handleInputChange = (event) =>{
         setSearchTerm(event.target.value);
     };
@@ -59,6 +70,7 @@ const PodcastSearch = ({setPodcast,setLength}) =>{
                 .then((res)=>{
                     if(res.data.results.length>0){
                         setPodcastResults(res.data.results)
+                        setIsVisible(true)
                     } else{
                         setDataFound(false);
                         setLoading(null);
@@ -75,8 +87,9 @@ const PodcastSearch = ({setPodcast,setLength}) =>{
         setSelectedPodcast(podcastResults[indexValue]);
         setPodcast(podcastResults[indexValue]);  // pass selected podcast back up to parent (app.jsx)
 
-        //reset podcastResults to empty to unRender the podcastResults div
-        setPodcastResults([]);
+        //reset isVisible to empty to unRender the results ul
+        setIsVisible(false);
+        
     };
 
     useEffect(()=>{
@@ -100,9 +113,7 @@ const PodcastSearch = ({setPodcast,setLength}) =>{
                    {searchIcon}
                 </button>
             </form>
-           
-            <div className="podcastsContainer">
-                {
+            {
                 dataFound === false && podcastResults.length === 0 ? 
                 (
                     <h3>No Podcasts Found</h3>
@@ -112,22 +123,26 @@ const PodcastSearch = ({setPodcast,setLength}) =>{
                     <div className="loader"></div>
                 ) 
                 : loading === null && podcastResults.length > 0 ?
-                 (
-                    <ul>
-                        {podcastResults.map((result, index) => {
-                            return (
-                                <li key={result.id} data-index={index}>
-                                    <h3>{result.podcast_title_original}</h3>
-                                    <p>{result.title_original}</p>
-                                    <button onClick={podcastSelection}>Select</button>
-                                </li>
-                            );
-                        })}
-                    </ul>
+                (
+                    <div className="resultsContainer">
+                        {mountedTransition((style, item) =>
+                            item ? (
+                                <animated.ul style={style} className="results">
+                                    {podcastResults.map((result, index) => (
+                                        <li key={result.id} data-index={index}>
+                                            <h3>{result.podcast_title_original}</h3>
+                                            <p>{result.title_original}</p>
+                                            <button onClick={podcastSelection}>Select</button>
+                                        </li>
+                                    ))}
+                                </animated.ul>
+                        ) : null
+                    )}
+                </div>
                 ) 
                 : null
                 }
-            </div>
+           
         </div>
     )
 }

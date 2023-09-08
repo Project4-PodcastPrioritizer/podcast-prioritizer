@@ -5,20 +5,39 @@
     align-items: center;
 }
 
-.podcastsContainer ul{
-    list-style: none;
-}
+
 
 button{
     background-color: rgba(245, 245, 245, 0);
     border-radius: 5px;
     width: fit-content;
     transition: .15s ease-in;
+    padding: 0;
 }
 
 button:hover{
     background-color: rgba(245, 245, 245, 0.613);
 }
+
+/* Results Container */
+
+.resultsContainer ul{
+    list-style: none;
+}
+.results{
+    opacity: .1;
+    margin-top: 2rem;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    height: 30rem;
+    width: 40rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+
+
 
 /* loading animation */
 .loader {
