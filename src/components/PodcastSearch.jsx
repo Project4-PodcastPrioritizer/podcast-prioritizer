@@ -1,17 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import './PodcastSearch.css'
-// todo
-// create  form input
-// user types in name of podcast they want to listen to
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
-// on submit return list of podcasts
-    // podcast img
-    // podcast author
-    // podcast length
+import './PodcastSearch.css';
+import './SetUp.css';
+
+const searchIcon = <FontAwesomeIcon icon={faMagnifyingGlass} size="xs"/>
 
 
-const PodcastSearch = () =>{
+const PodcastSearch = ({setPodcast,setLength}) =>{
     //INPUT STATE
     const [searchTerm,setSearchTerm] = useState("");
 
@@ -21,7 +19,6 @@ const PodcastSearch = () =>{
     const [loading, setLoading] = useState(null); // displays loading animation while api call being made
 
     // KEY INFORMATION STATES
-    const [selectedLength, setSelectedLength] = useState("") // length of podcast selected
     const [selectedPodcast, setSelectedPodcast] = useState([]) // selected podcasts object from podcastResults
 
 
@@ -75,13 +72,15 @@ const PodcastSearch = () =>{
     };
     const podcastSelection = (event) =>{
         const indexValue = (event.target.parentNode.getAttribute("data-index"));
-        setSelectedPodcast(podcastResults[indexValue])
+        setSelectedPodcast(podcastResults[indexValue]);
+        setPodcast(podcastResults[indexValue]);  // pass selected podcast back up to parent (app.jsx)
+
+        //reset podcastResults to empty to unRender the podcastResults div
+        setPodcastResults([]);
     };
 
-
-
     useEffect(()=>{
-        setSelectedLength(selectedPodcast.audio_length_sec) 
+        setLength(selectedPodcast.audio_length_sec); // pass selected podcast length up to parent (app.jsx)
     },[selectedPodcast])
 
     useEffect(()=>{
@@ -91,18 +90,16 @@ const PodcastSearch = () =>{
         }
     },[podcastResults])
 
-
-
     return(
         <div className="podcastSearch">
+
             <form action="submit">
-                <label htmlFor="search">Podcast Search</label>
-                <input type="text" id="search" onChange={handleInputChange}/>
-                <button onClick={handlePodcastGet}>show me podcasts!</button>
+                <label htmlFor="search" className="sr-only">Podcast Search</label>
+                <input type="text" id="search" onChange={handleInputChange} placeholder="Search Some Podcasts" />
+                <button onClick={handlePodcastGet}>
+                   {searchIcon}
+                </button>
             </form>
-           
-           
-           
            
             <div className="podcastsContainer">
                 {
