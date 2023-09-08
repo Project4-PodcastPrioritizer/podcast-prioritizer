@@ -9,6 +9,17 @@
     list-style: none;
 }
 
+button{
+    background-color: rgba(245, 245, 245, 0);
+    border-radius: 5px;
+    width: fit-content;
+    transition: .15s ease-in;
+}
+
+button:hover{
+    background-color: rgba(245, 245, 245, 0.613);
+}
+
 /* loading animation */
 .loader {
     margin-top: 2rem;
