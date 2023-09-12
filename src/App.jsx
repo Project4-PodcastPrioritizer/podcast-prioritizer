@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import PodcastSearch from './components/PodcastSearch';
 import './App.css'
 
+import Geolocation from './components/Geolocation.jsx'
 
 function App() {
   const [selectedPodcast,setSelectedPodcast] = useState([]);
@@ -14,9 +15,10 @@ function App() {
 
   return (
     <>
-      <PodcastSearch setPodcast={setSelectedPodcast} setLength={setPodcaastLength}/>
+    <Geolocation />
+    <PodcastSearch setPodcast={setSelectedPodcast} setLength={setPodcaastLength} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
