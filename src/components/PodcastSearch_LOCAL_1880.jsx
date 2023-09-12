@@ -24,11 +24,7 @@ const PodcastSearch = ({setPodcast,setLength}) =>{
     const [loading, setLoading] = useState(null); // displays loading animation while api call being made
 
     // PASS TO PARENT  STATES
-<<<<<<< HEAD
     const [selectedPodcast, setSelectedPodcast] = useState([]) // 
-=======
-    const [selectedPodcast, setSelectedPodcast] = useState([]) // selected podcasts object from podcastResults
->>>>>>> 691f082b51000a0cf6ee9f75062eb611382600fa
 
     // MOUNTING STATES
     const [isVisible, setIsVisible] = useState(false)
@@ -38,10 +34,7 @@ const PodcastSearch = ({setPodcast,setLength}) =>{
         enter:{x:0,y:0,opacity:1},
         leave:{x:0,y:50,opacity:0}
     });
-<<<<<<< HEAD
 
-=======
->>>>>>> 691f082b51000a0cf6ee9f75062eb611382600fa
     const handleInputChange = (event) =>{
         setSearchTerm(event.target.value);
     };
@@ -50,21 +43,13 @@ const PodcastSearch = ({setPodcast,setLength}) =>{
         // prevent default page refresh
         event.preventDefault();
 
-<<<<<<< HEAD
         // TODO: prevent user from inputing empty query
-=======
-        // prevent user from inputing empty query
->>>>>>> 691f082b51000a0cf6ee9f75062eb611382600fa
 
 
 
         // function variables.
         const apiKey = import.meta.env.VITE_LISTEN_API_KEY;
         const query = searchTerm;
-<<<<<<< HEAD
-=======
-        const results = []
->>>>>>> 691f082b51000a0cf6ee9f75062eb611382600fa
         //show spinner
         setLoading(true);
         setDataFound(null)
