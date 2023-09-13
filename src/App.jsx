@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import PodcastSearch from './components/PodcastSearch';
-import { useState } from 'react'
-import './App.css'
 import DistanceCalculator from './MapQuest';
+
+import './App.css'
 
 
 import Geolocation from './components/Geolocation.jsx'
