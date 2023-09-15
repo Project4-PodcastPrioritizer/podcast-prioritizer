@@ -5,86 +5,94 @@ const DistanceCalculator = () => {
     // State variables to store user's chosen start and end locations
     const [startLocation, setStartLocation] = useState('');
     const [endLocation, setEndLocation] = useState('');
-
+    
+    const [startSuggestionClicked, setStartSuggestionClicked] = useState(false);
+    const [endSuggestionClicked, setEndSuggestionClicked] = useState(false);
     // State variable to store the calculated distance
     const[distance, setDistance] = useState(null);
-
-    // State varriables to store auto suggestions for start and end locations
+    // State variables to store auto suggestions for start and end locations
     const [startSuggestions, setStartSuggestions] = useState([]);
     const [endSuggestions, setEndSuggestions] = useState([]);
-
     // State variable to store error messages
     const [errorMessage, setErrorMessage] = useState(null);
 
     useEffect(() => {
-        // Function to fetch auto suggestions for start location
-        const fetchStartSuggestions = async () => {
-            try {
-                const trimmedStartLocation = startLocation.trim();
+      // Function to fetch auto suggestions for start location
+      const fetchStartSuggestions = async () => {
+        try {
+          if (startLocation === '') {
+            setStartSuggestions([]); // Clears suggestions when input is empty
+            return;
+          }
     
-                if (trimmedStartLocation === ''){
-                    setStartSuggestions([]); // Clears suggestions when input is empty
-                    return;
-                }
+          // Check if a suggestion was clicked, and if so, do not fetch suggestions
+          if (!startSuggestionClicked) {
+            const response = await axios.get(
+              'https://www.mapquestapi.com/geocoding/v1/batch',
+              {
+                params: {
+                  key: 'Ua9N73Lhw2Tg18LuWk3hcW9q4Pp09UKM',
+                  location: startLocation,
+                  maxResults: 5,
+                },
+              }
+            );
     
-                const response = await axios.get(
-                    'https://www.mapquestapi.com/geocoding/v1/batch',
-                    {
-                        params: {
-                        key: 'Ua9N73Lhw2Tg18LuWk3hcW9q4Pp09UKM',
-                        location: trimmedStartLocation,
-                        maxResults: 5,
-                        },
-                    }
-                );
+            const MapQuestSuggestions = response.data.results[0].locations;
+            const suggestions = [];
+            MapQuestSuggestions.forEach((suggestion) => {
+              suggestions.push({
+                street: suggestion.street,
+                city: suggestion.adminArea5,
+                state: suggestion.adminArea3,
+                countryCode: suggestion.adminArea1,
+              });
+            });
+            setStartSuggestions(suggestions);
+          }
+        } catch (error) {
+          console.error('Error fetching start suggestions', error);
+        }
+      };
+      // Call the fetchStartSuggestions function when startLocation or suggestionClicked changes
+      fetchStartSuggestions();
+    },[startLocation, startSuggestionClicked]);
 
-                console.log('Start Location Suggestions:', response.data)
-
-                // Extracts suggestions from the response data and set them
-                const suggestions = response.data.results.map((result) => ({
-                    displayString: result.displayString,
-                }));
-    
-                setStartSuggestions(suggestions);
-                } catch (error) {
-                console.error('Error fetching start suggestions', error);
-            }
-        };
-    
-            // Call the fetchStartSuggestions function when startLocation changes
-            fetchStartSuggestions();
-            }, [startLocation]);
-
-        useEffect(() => {
+    useEffect(() => {
             // Function to fetch auto suggestions for end location
             const fetchEndSuggestions = async () => {
                 try {
-                    const trimmedEndLocation = endLocation.trim();
-        
-                    if (trimmedEndLocation === '') {
+                    if (endLocation === '') {
                         setEndSuggestions([]); // Clear suggestions when input is empty
                         return;
                     }
-        
-                    const response = await axios.get(
-                        'https://www.mapquestapi.com/geocoding/v1/batch',
-                    {
-                     params: {
-                        key: 'Ua9N73Lhw2Tg18LuWk3hcW9q4Pp09UKM',
-                        location: trimmedEndLocation,
-                        maxResults: 5,
-                        },
-                    }
-                );
-
-                console.log('Start Location Suggestions:', response.data)
-    
-                // Extracts suggestions from the response data and set them
-                const suggestions = response.data.results.map((result) => ({
-                    displayString: result.displayString,
-                }));
-            
-                setEndSuggestions(suggestions);
+                    if(!endSuggestionClicked){
+                      const response = await axios.get(
+                          'https://www.mapquestapi.com/geocoding/v1/batch',
+                      {
+                       params: {
+                          key: 'Ua9N73Lhw2Tg18LuWk3hcW9q4Pp09UKM',
+                          location: endLocation,
+                          maxResults: 5,
+                          },
+                      }
+                  );
+  
+                  console.log('Start Location Suggestions:', response.data)
+      
+                  // Extracts suggestions from the response data and set them
+                  const MapQuestSuggestions = response.data.results[0].locations;
+                  const suggestions = [];
+                  MapQuestSuggestions.forEach((suggestion) => {
+                    suggestions.push({
+                      street: suggestion.street,
+                      city: suggestion.adminArea5,
+                      state: suggestion.adminArea3,
+                      countryCode: suggestion.adminArea1,
+                    });
+                  });
+                  setEndSuggestions(suggestions);
+                  }
                 } catch (error) {
                 console.error('Error fetching suggestions', error);
                 }
@@ -92,19 +100,19 @@ const DistanceCalculator = () => {
 
             // Calls the fetchEndSuggestions function when endLoation changes
             fetchEndSuggestions();
-        }, [endLocation]);
+        }, [endLocation,endSuggestionClicked]);
 
         const handleStartSuggestionClick = (suggestion) => {
-            // When a start location is clicked, fill the input field
-            setStartLocation(suggestion.displayString);
-            // Clears suggestions
+            let suggestionString = `${suggestion.street} ${suggestion.city} ${suggestion.state} ${suggestion.countryCode}`;
+            setStartLocation(suggestionString);
             setStartSuggestions([]);
+            setStartSuggestionClicked(true)
         };
 
         const handleEndSuggestionClick = (suggestion) => {
-            // When a end location is clicked, fill the input field
-            setEndLocation(suggestion.displayString);
-            // Clears suggestions
+          let suggestionString = `${suggestion.street} ${suggestion.city} ${suggestion.state} ${suggestion.countryCode}`;
+            setEndLocation(suggestionString);
+            setEndSuggestionClicked(true);
             setEndSuggestions([]);
         };
 
@@ -159,39 +167,51 @@ const DistanceCalculator = () => {
             <input
               type="text"
               value={startLocation}
+              onClick={()=>{setEndSuggestions([])}}
               onChange={(e) => {
+                setStartSuggestionClicked(false);
                 setStartLocation(e.target.value);
                 setErrorMessage(null); // Clears error message
               }} 
             />
             {/* Displays Start Location Suggestions */}
             <ul>
-                {startSuggestions.map((suggestion, index) => (
+              {
+                startSuggestions.map((suggestion,index)=>{
+                  return(
                     <li key={index} onClick={() => handleStartSuggestionClick(suggestion)}>
-                    {suggestion.displayString}
+                      <p>{`${suggestion.street} ${suggestion.city} ${suggestion.state} ${suggestion.countryCode}`}</p>
                     </li>
-                ))}
+                  )
+                })
+              }
             </ul>
           </div>
-    
           {/* End Location Input */}
           <div>
             <label htmlFor='endLocation'>To</label>
             <input
               type="text"
               value={endLocation}
-              onChange={(e) => setEndLocation(e.target.value)} 
+              onClick={()=>{setStartSuggestions([])}}
+              onChange={(e) => {
+                setEndLocation(e.target.value);
+                setEndSuggestionClicked(false);  
+              }} 
             />
             {/* Displays End Location Suggestions */}
             <ul>
-                {endSuggestions.map((suggestion, index) => (
+            {
+                endSuggestions.map((suggestion,index)=>{
+                  return(
                     <li key={index} onClick={() => handleEndSuggestionClick(suggestion)}>
-                    {suggestion.displayString}
+                      <p>{`${suggestion.street} ${suggestion.city} ${suggestion.state} ${suggestion.countryCode}`}</p>
                     </li>
-                ))}
+                  )
+                })
+              }
             </ul>
           </div>
-    
           {/* Calculate Distance Button */}
           <div>
             <button type="submit">Calculate Distance</button>
