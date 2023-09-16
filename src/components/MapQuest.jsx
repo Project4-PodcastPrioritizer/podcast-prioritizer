@@ -14,8 +14,8 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
   // State variable to store error messages
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const inputRef = useRef(null);
-  const locationSuggestionRef = useRef(null);
+  const startLocationSuggestionsRef = useRef(null);
+  const endLocationSuggestionsRef = useRef(null);
 
   const handleStartSuggestionClick = (suggestion) => {
     let suggestionString = `${suggestion.street} ${suggestion.city} ${suggestion.state} ${suggestion.countryCode}`;
@@ -63,12 +63,36 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
     }
   };
   // Determine a suggestion (bike or walk) based on the calculated distance
-  const modeOfTravelSuggestion =
-    distance > 2 ? (podcastLength > 1000 ? "bike" : "walk") : "walk";
+  const modeOfTravelSuggestion = distance > 2 ? (podcastLength > 1000 ? "bike" : "walk") : "walk";
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevents the default form submission behaviour
     calculateDistance(); // Calls the calculateDistance function
+  };
+  const handleStartLocationOutsideClick = (e) =>{
+    if(
+      startLocationSuggestionsRef.current && 
+      !startLocationSuggestionsRef.current.contains(e.target)
+      )
+      {
+        setStartSuggestions([]);
+      }
+  };
+  const handleEndLocationOutsideClick = (e) =>{
+    if(
+      endLocationSuggestionsRef.current && 
+      !endLocationSuggestionsRef.current.contains(e.target)
+      )
+      {
+        setEndSuggestions([]);
+      }
+  };
+  const handleEnterKeyPress = (e) => {
+    if (e.key === "Enter") {
+      // Enter key was pressed, hide suggestions
+      setStartSuggestions([]);
+      setEndSuggestions([]);
+    }
   };
   useEffect(() => {
     // Function to fetch auto suggestions for start location
@@ -153,34 +177,17 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
     fetchEndSuggestions();
   }, [endLocation, endSuggestionClicked]);
   useEffect(() => {
-    const handleOutsideClick = (e) => {
-      if (
-        locationSuggestionRef.current &&
-        !locationSuggestionRef.current.contains(e.target) &&
-        !startSuggestions.length && // Check if startSuggestions is empty
-        !endSuggestions.length // Check if endSuggestions is empty
-      ) {
-        // Clicked outside both input fields
-        setStartSuggestions([]);
-        setEndSuggestions([]);
-      }
-    };
-    const handleEnterKeyPress = (e) => {
-      if (e.key === "Enter") {
-        // Enter key was pressed, hide suggestions
-        setStartSuggestions([]);
-        setEndSuggestions([]);
-      }
-    };
-    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("mousedown", handleStartLocationOutsideClick);
+    document.addEventListener("mousedown", handleEndLocationOutsideClick);
     document.addEventListener("keydown", handleEnterKeyPress);
-    //remove the event listener on unMount
+    //remove the event listeners on unMount
 
     return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("mousedown", handleStartLocationOutsideClick);
+      document.removeEventListener("mousedown", handleEndLocationOutsideClick);
       document.removeEventListener("keydown", handleEnterKeyPress);
     };
-  }, [inputRef]);
+  }, [startLocationSuggestionsRef,endLocationSuggestionsRef]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -198,10 +205,9 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
             setStartLocation(e.target.value);
             setErrorMessage(null); // Clears error message
           }}
-          ref={inputRef}
         />
         {/* Displays Start Location Suggestions */}
-        <ul ref={locationSuggestionRef}>
+        <ul ref={startLocationSuggestionsRef}>
           {startSuggestions
             .filter(
               (suggestion) =>
@@ -214,7 +220,9 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
               return (
                 <li
                   key={index}
+                  tabIndex={index+1}
                   onClick={() => handleStartSuggestionClick(suggestion)}
+                  onKeyDown={(e)=>e.key===`Enter`? handleStartSuggestionClick(suggestion) : null}
                 >
                   <p>{`${suggestion.street} ${suggestion.city} ${suggestion.state} ${suggestion.countryCode}`}</p>
                 </li>
@@ -235,10 +243,9 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
             setEndLocation(e.target.value);
             setEndSuggestionClicked(false);
           }}
-          ref={inputRef}
         />
         {/* Displays End Location Suggestions */}
-        <ul ref={locationSuggestionRef}>
+        <ul ref={endLocationSuggestionsRef}>
           {endSuggestions
             .filter(
               (suggestion) =>
@@ -251,7 +258,9 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
               return (
                 <li
                   key={index}
+                  tabIndex={index}
                   onClick={() => handleEndSuggestionClick(suggestion)}
+                  onKeyDown={(e)=>e.key===`Enter`? handleStartSuggestionClick(suggestion) : null}
                 >
                   <p>{`${suggestion.street} ${suggestion.city} ${suggestion.state} ${suggestion.countryCode}`}</p>
                 </li>
