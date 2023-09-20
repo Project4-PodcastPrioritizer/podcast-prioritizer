@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+// css
+import "./DistanceCalculator.css";
 
 const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
   // State variables to store user's chosen start and end locations
@@ -14,8 +16,10 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
   // State variable to store error messages
   const [errorMessage, setErrorMessage] = useState(null);
 
+  //Refs to manipulate the dom after rendering.
   const startLocationSuggestionsRef = useRef(null);
   const endLocationSuggestionsRef = useRef(null);
+  const formRef = useRef(null);
 
   const handleStartSuggestionClick = (suggestion) => {
     let suggestionString = `${suggestion.street} ${suggestion.city} ${suggestion.state} ${suggestion.countryCode}`;
@@ -63,29 +67,28 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
     }
   };
   // Determine a suggestion (bike or walk) based on the calculated distance
-  const modeOfTravelSuggestion = distance > 2 ? (podcastLength > 1000 ? "bike" : "walk") : "walk";
+  const modeOfTravelSuggestion =
+    distance > 2 ? (podcastLength > 1000 ? "bike" : "walk") : "walk";
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevents the default form submission behaviour
     calculateDistance(); // Calls the calculateDistance function
   };
-  const handleStartLocationOutsideClick = (e) =>{
-    if(
-      startLocationSuggestionsRef.current && 
+  const handleStartLocationOutsideClick = (e) => {
+    if (
+      startLocationSuggestionsRef.current &&
       !startLocationSuggestionsRef.current.contains(e.target)
-      )
-      {
-        setStartSuggestions([]);
-      }
+    ) {
+      setStartSuggestions([]);
+    }
   };
-  const handleEndLocationOutsideClick = (e) =>{
-    if(
-      endLocationSuggestionsRef.current && 
+  const handleEndLocationOutsideClick = (e) => {
+    if (
+      endLocationSuggestionsRef.current &&
       !endLocationSuggestionsRef.current.contains(e.target)
-      )
-      {
-        setEndSuggestions([]);
-      }
+    ) {
+      setEndSuggestions([]);
+    }
   };
   const handleEnterKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -176,103 +179,135 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
     // Calls the fetchEndSuggestions function when endLoation changes
     fetchEndSuggestions();
   }, [endLocation, endSuggestionClicked]);
+
   useEffect(() => {
     document.addEventListener("mousedown", handleStartLocationOutsideClick);
     document.addEventListener("mousedown", handleEndLocationOutsideClick);
     document.addEventListener("keydown", handleEnterKeyPress);
-    //remove the event listeners on unMount
 
+    if (formRef.current) {
+      const formWidth = formRef.current.offsetWidth;
+      document.documentElement.style.setProperty(
+        "--form-width",
+        `${formWidth}px`
+      );
+    }
+    //remove the event listeners on unMount
     return () => {
-      document.removeEventListener("mousedown", handleStartLocationOutsideClick);
+      document.removeEventListener(
+        "mousedown",
+        handleStartLocationOutsideClick
+      );
       document.removeEventListener("mousedown", handleEndLocationOutsideClick);
       document.removeEventListener("keydown", handleEnterKeyPress);
     };
-  }, [startLocationSuggestionsRef,endLocationSuggestionsRef]);
+  }, [startLocationSuggestionsRef, endLocationSuggestionsRef]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      {/* Start Location Input */}
-      <div>
-        <label htmlFor="startLocation">From</label>
-        <input
-          type="text"
-          value={startLocation}
-          onClick={() => {
-            setEndSuggestions([]);
-          }}
-          onChange={(e) => {
-            setStartSuggestionClicked(false);
-            setStartLocation(e.target.value);
-            setErrorMessage(null); // Clears error message
-          }}
-        />
-        {/* Displays Start Location Suggestions */}
-        <ul ref={startLocationSuggestionsRef}>
-          {startSuggestions
-            .filter(
-              (suggestion) =>
-                suggestion.street !== "" &&
-                suggestion.city !== "" &&
-                suggestion.state !== "" &&
-                suggestion.countryCode !== ""
-            )
-            .map((suggestion, index) => {
-              return (
-                <li
-                  key={index}
-                  tabIndex={index+1}
-                  onClick={() => handleStartSuggestionClick(suggestion)}
-                  onKeyDown={(e)=>e.key===`Enter`? handleStartSuggestionClick(suggestion) : null}
-                >
-                  <p>{`${suggestion.street} ${suggestion.city} ${suggestion.state} ${suggestion.countryCode}`}</p>
-                </li>
-              );
-            })}
-        </ul>
-      </div>
-      {/* End Location Input */}
-      <div>
-        <label htmlFor="endLocation">To</label>
-        <input
-          type="text"
-          value={endLocation}
-          onClick={() => {
-            setStartSuggestions([]);
-          }}
-          onChange={(e) => {
-            setEndLocation(e.target.value);
-            setEndSuggestionClicked(false);
-          }}
-        />
-        {/* Displays End Location Suggestions */}
-        <ul ref={endLocationSuggestionsRef}>
-          {endSuggestions
-            .filter(
-              (suggestion) =>
-                suggestion.street !== "" &&
-                suggestion.city !== "" &&
-                suggestion.state !== "" &&
-                suggestion.countryCode !== ""
-            )
-            .map((suggestion, index) => {
-              return (
-                <li
-                  key={index}
-                  tabIndex={index}
-                  onClick={() => handleEndSuggestionClick(suggestion)}
-                  onKeyDown={(e)=>e.key===`Enter`? handleStartSuggestionClick(suggestion) : null}
-                >
-                  <p>{`${suggestion.street} ${suggestion.city} ${suggestion.state} ${suggestion.countryCode}`}</p>
-                </li>
-              );
-            })}
-        </ul>
-      </div>
-      {/* Calculate Distance Button */}
-      <div>
-        <button type="submit">Calculate Distance</button>
-      </div>
-
+    <>
+      <form
+        onSubmit={handleSubmit}
+        className="DistanceCalculator"
+        ref={formRef}
+      >
+        {/* Start Location Input */}
+        <div className="Start">
+          <label htmlFor="startLocation" className="sr-only">
+            Location
+          </label>
+          <input
+            type="text"
+            value={startLocation}
+            onClick={() => {
+              setEndSuggestions([]);
+            }}
+            onChange={(e) => {
+              setStartSuggestionClicked(false);
+              setStartLocation(e.target.value);
+              setErrorMessage(null); // Clears error message
+            }}
+            required
+            placeholder="Location"
+          />
+          {/* Displays Start Location Suggestions */}
+          <ul ref={startLocationSuggestionsRef}>
+            {startSuggestions
+              .filter(
+                (suggestion) =>
+                  suggestion.street !== "" &&
+                  suggestion.city !== "" &&
+                  suggestion.state !== "" &&
+                  suggestion.countryCode !== ""
+              )
+              .map((suggestion, index) => {
+                return (
+                  <li
+                    key={index}
+                    tabIndex={index + 1}
+                    onClick={() => handleStartSuggestionClick(suggestion)}
+                    onKeyDown={(e) =>
+                      e.key === `Enter`
+                        ? handleStartSuggestionClick(suggestion)
+                        : null
+                    }
+                  >
+                    <p>{`${suggestion.street} ${suggestion.city} ${suggestion.state} ${suggestion.countryCode}`}</p>
+                  </li>
+                );
+              })}
+          </ul>
+        </div>
+        {/* End Location Input */}
+        <div className="End">
+          <label htmlFor="endLocation" className="sr-only">
+            Destination
+          </label>
+          <input
+            type="text"
+            value={endLocation}
+            onClick={() => {
+              setStartSuggestions([]);
+            }}
+            onChange={(e) => {
+              setEndLocation(e.target.value);
+              setEndSuggestionClicked(false);
+            }}
+            required
+            placeholder="Destination"
+          />
+          {/* Displays End Location Suggestions */}
+          <ul ref={endLocationSuggestionsRef}>
+            {endSuggestions
+              .filter(
+                (suggestion) =>
+                  suggestion.street !== "" &&
+                  suggestion.city !== "" &&
+                  suggestion.state !== "" &&
+                  suggestion.countryCode !== ""
+              )
+              .map((suggestion, index) => {
+                return (
+                  <li
+                    key={index}
+                    tabIndex={index}
+                    onClick={() => handleEndSuggestionClick(suggestion)}
+                    onKeyDown={(e) =>
+                      e.key === `Enter`
+                        ? handleStartSuggestionClick(suggestion)
+                        : null
+                    }
+                  >
+                    <p>{`${suggestion.street} ${suggestion.city} ${suggestion.state} ${suggestion.countryCode}`}</p>
+                  </li>
+                );
+              })}
+          </ul>
+        </div>
+        {/* Calculate Distance Button */}
+        <div className="Submit">
+          <button type="submit">Calculate Distance</button>
+        </div>
+      </form>
       {/* Displays the calculated distance and suggestion */}
       {!isNaN(distance) && distance !== null ? (
         startLocation !== "" && endLocation !== "" ? (
@@ -290,7 +325,7 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
 
       {/* Displays error message */}
       {errorMessage && <p className="error">{errorMessage}</p>}
-    </form>
+    </>
   );
 };
 
