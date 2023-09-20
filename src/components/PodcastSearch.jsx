@@ -123,7 +123,8 @@ const PodcastSearch = ({ setPodcast, setLength }) => {
               <animated.ul style={style} className="results">
                 {podcastResults.map((result, index) => (
                   <li key={result.id} data-index={index}>
-                    <h3>{result.podcast_title_original}</h3>
+                    <img src={result.image} className="thumbnail"/>
+                    <p>{result.podcast_title_original}</p>
                     <p>{result.title_original}</p>
                     <button onClick={podcastSelection}>Select</button>
                   </li>

@@ -20,6 +20,7 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
   const startLocationSuggestionsRef = useRef(null);
   const endLocationSuggestionsRef = useRef(null);
   const formRef = useRef(null);
+  const inputRef = useRef(null);
 
   const handleStartSuggestionClick = (suggestion) => {
     let suggestionString = `${suggestion.street} ${suggestion.city} ${suggestion.state} ${suggestion.countryCode}`;
@@ -192,6 +193,15 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
         `${formWidth}px`
       );
     }
+
+    if (inputRef.current) {
+      const inputHeight = inputRef.current.offsetHeight;
+      document.documentElement.style.setProperty(
+        "--input-height",
+        `${inputHeight}px`
+      );
+      console.log(inputHeight);
+    }
     //remove the event listeners on unMount
     return () => {
       document.removeEventListener(
@@ -227,7 +237,8 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
               setErrorMessage(null); // Clears error message
             }}
             required
-            placeholder="Location"
+            placeholder=" Location"
+            ref={inputRef}
           />
           {/* Displays Start Location Suggestions */}
           <ul ref={startLocationSuggestionsRef}>
@@ -273,7 +284,7 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
               setEndSuggestionClicked(false);
             }}
             required
-            placeholder="Destination"
+            placeholder=" Destination"
           />
           {/* Displays End Location Suggestions */}
           <ul ref={endLocationSuggestionsRef}>
@@ -305,7 +316,7 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
         </div>
         {/* Calculate Distance Button */}
         <div className="Submit">
-          <button type="submit">Calculate Distance</button>
+          <button type="submit">Calculate</button>
         </div>
       </form>
       {/* Displays the calculated distance and suggestion */}
