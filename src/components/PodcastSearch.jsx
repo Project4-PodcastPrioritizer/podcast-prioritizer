@@ -1,23 +1,16 @@
-//axios -> api calling import
 import axios from "axios";
-// react imports
 import { useEffect, useState } from "react";
-//styling imports
 import "./PodcastSearch.css";
 import "./SetUp.css";
-// animations from react-spring
 import { useTransition, animated } from "react-spring";
-// font awesome icon imports
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-// font awesome declarations
+
 const searchIcon = <FontAwesomeIcon icon={faMagnifyingGlass} size="xs" />;
 
 const PodcastSearch = ({ setPodcast, setLength }) => {
   //INPUT STATE
   const [searchTerm, setSearchTerm] = useState("");
-
-  //API STATES
   const [podcastResults, setPodcastResults] = useState([]); // results found from call
   const [dataFound, setDataFound] = useState(null); // if user query yields results or not
   const [loading, setLoading] = useState(null); // displays loading animation while api call being made
@@ -42,44 +35,47 @@ const PodcastSearch = ({ setPodcast, setLength }) => {
     event.preventDefault();
 
     // TODO: prevent user from inputing empty query
+    if (searchTerm === "") {
+      alert(`Please enter something!`);
+    } else {
+      // function variables.
+      const apiKey = import.meta.env.VITE_LISTEN_API_KEY;
+      const query = searchTerm;
+      //show spinner
+      setLoading(true);
+      setDataFound(null);
 
-    // function variables.
-    const apiKey = import.meta.env.VITE_LISTEN_API_KEY;
-    const query = searchTerm;
-    //show spinner
-    setLoading(true);
-    setDataFound(null);
-
-    if (apiKey) {
-      axios({
-        url:
-          "https://proxy.junocollege.com/https://listen-api.listennotes.com/api/v2/search/",
-        method: "GET",
-        dataResponse: "JSON",
-        headers: {
-          "X-ListenAPI-Key": apiKey,
-        },
-        params: {
-          q: query,
-          language: "English",
-        },
-      })
-        .then((res) => {
-          if (res.data.results.length > 0) {
-            setPodcastResults(res.data.results);
-            setIsVisible(true);
-          } else {
-            setDataFound(false);
-            setLoading(null);
-            setPodcastResults([]);
-          }
+      if (apiKey) {
+        axios({
+          url:
+            "https://proxy.junocollege.com/https://listen-api.listennotes.com/api/v2/search/",
+          method: "GET",
+          dataResponse: "JSON",
+          headers: {
+            "X-ListenAPI-Key": apiKey,
+          },
+          params: {
+            q: query,
+            language: "English",
+          },
         })
-        .catch((error) => {
-          console.error(
-            "Error occurred when fetching podcast results: ",
-            error
-          );
-        });
+          .then((res) => {
+            if (res.data.results.length > 0) {
+              setPodcastResults(res.data.results);
+              setIsVisible(true);
+            } else {
+              setDataFound(false);
+              setLoading(null);
+              setPodcastResults([]);
+            }
+          })
+          .catch((error) => {
+            console.error(
+              "Error occurred when fetching podcast results: ",
+              error
+            );
+          });
+      }
     }
   };
   const podcastSelection = (event) => {
