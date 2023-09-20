@@ -13,7 +13,7 @@ function App() {
 
   return (
 
-    // Create a "Go back" Component, Clears seled
+   
     <>
     <button 
     onClick={()=>{
