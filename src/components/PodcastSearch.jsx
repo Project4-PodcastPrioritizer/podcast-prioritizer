@@ -8,7 +8,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const searchIcon = <FontAwesomeIcon icon={faMagnifyingGlass} size="xs" />;
 
-const PodcastSearch = ({ setPodcast, setLength }) => {
+const PodcastSearch = ({ setPodcast, setLength, currentPodcast }) => {
   //INPUT STATE
   const [searchTerm, setSearchTerm] = useState("");
   const [podcastResults, setPodcastResults] = useState([]); // results found from call
@@ -100,18 +100,21 @@ const PodcastSearch = ({ setPodcast, setLength }) => {
 
   return (
     <div className="podcastSearch">
-      <form action="submit">
-        <label htmlFor="search" className="sr-only">
-          Podcast Search
-        </label>
-        <input
-          type="text"
-          id="search"
-          onChange={handleInputChange}
-          placeholder="Search Some Podcasts"
-        />
-        <button onClick={handlePodcastGet}>{searchIcon}</button>
-      </form>
+      {currentPodcast.length === 0 ? (
+        <form action="submit">
+          <label htmlFor="search" className="sr-only">
+            Podcast Search
+          </label>
+          <input
+            type="text"
+            id="search"
+            onChange={handleInputChange}
+            placeholder="Search Some Podcasts"
+          />
+          <button onClick={handlePodcastGet}>{searchIcon}</button>
+        </form>
+      ) : null}
+
       {dataFound === false && podcastResults.length === 0 ? (
         <h3>No Podcasts Found</h3>
       ) : loading === true ? (
@@ -123,7 +126,8 @@ const PodcastSearch = ({ setPodcast, setLength }) => {
               <animated.ul style={style} className="results">
                 {podcastResults.map((result, index) => (
                   <li key={result.id} data-index={index}>
-                    <h3>{result.podcast_title_original}</h3>
+                    <img src={result.image} className="thumbnail" />
+                    <p>{result.podcast_title_original}</p>
                     <p>{result.title_original}</p>
                     <button onClick={podcastSelection}>Select</button>
                   </li>
