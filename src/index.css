@@ -1,6 +1,13 @@
 body{
     background-color:#001e31;
     color: white;
+    font-family: 'Lato', sans-serif;
+}
+button{
+    font-family: 'Lato', sans-serif; 
+}
+h1,h2,h3,h4{
+    font-family: 'Nova Flat', cursive;
 }
 button{
     background-color:#D3CFE6;
