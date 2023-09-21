@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import PodcastSearch from "./components/PodcastSearch";
 import DistanceCalculator from "./components/DistanceCalculator";
-
+import Header from "./components/Header";
 import "./App.css";
 
 import Geolocation from "./components/Geolocation.jsx";
@@ -15,6 +15,7 @@ function App() {
 
     // Create a "Go back" Component, Clears seled
     <>
+    <Header />
     <button 
     onClick={()=>{
       setPodcastLength("");

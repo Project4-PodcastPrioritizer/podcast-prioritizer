@@ -1,8 +1,11 @@
 body{
     background-color:#001e31;
     color: white;
+    font-family: lato;
+    
 }
 button{
     background-color:#D3CFE6;
     color: black;
 }
+
