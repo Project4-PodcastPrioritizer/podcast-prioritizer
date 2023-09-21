@@ -12,11 +12,12 @@ const Prioritizer = ({
   setDistance,
 }) => {
   const modeOfTravelSuggestion =
-    distance > 2
-      ? "bike, please be alert at all times and remember to not have your volume too loud"
-      : podcastLength > 1000
-      ? "walk"
-      : "bike, please be alert at all times and remember to not have your volume too loud";
+    distance > 2 && currentPodcast.length !== 0
+      ? podcastLength > 1000
+        ? "Walk!"
+        : "Bike!, please be safe and remember to be vigilant on your travels."
+      : null;
+
   return (
     <div className="app">
       <PodcastSearch
@@ -26,17 +27,15 @@ const Prioritizer = ({
       />
       {currentPodcast.length !== 0 ? (
         <>
-        <button
-        onClick={
-            ()=>{
-                setPodcast([]);
-                setLength("");
-                setDistance("");
-            }
-        }
-        >
+          <button
+            onClick={() => {
+              setPodcast([]);
+              setLength("");
+              setDistance("");
+            }}
+          >
             Change selection
-        </button>
+          </button>
           <h2>Chosen Podcast</h2>
           <div className="selected">
             <li key={currentPodcast.id}>
@@ -52,17 +51,14 @@ const Prioritizer = ({
         setDistance={setDistance}
         podcastLength={podcastLength}
       />
-      {distance !== null && distance > 0 ? (
-        <>
-          <div className="suggestion">
-            <p>
-              If you're going to listen to{" "}
-              {currentPodcast.podcast_title_original} then you should{" "}
-              {modeOfTravelSuggestion}!{" "}
-            </p>
-          </div>
-        </>
-      ) : null}
+      {distance !== null && distance > 0 && currentPodcast.length !== 0 && (
+        <div className="suggestion">
+          <p>
+            If you're going to listen to {currentPodcast.podcast_title_original}{" "}
+            then you should {modeOfTravelSuggestion}!
+          </p>
+        </div>
+      )}
     </div>
   );
 };
