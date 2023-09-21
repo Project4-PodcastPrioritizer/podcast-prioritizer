@@ -2,12 +2,17 @@
 .podcastSearch {
   display: flex;
 <<<<<<< HEAD
+<<<<<<< HEAD
   flex-direction: column;
   align-items: center;
 =======
   flex-wrap: wrap;
   width: 100%;
 >>>>>>> 8546596c44b4ad61c7e3c5e12a7812bef8b20af1
+=======
+  flex-wrap: wrap;
+  width: 100%;
+>>>>>>> 434e15db4ea578d2647445ce47c54521ff6ee200
 }
 
 button {
@@ -27,7 +32,10 @@ h3{
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 434e15db4ea578d2647445ce47c54521ff6ee200
 /* input field */
 .podcastSearch form{
   width: 100%;
@@ -36,7 +44,10 @@ h3{
   width: 100%;
 }
 
+<<<<<<< HEAD
 >>>>>>> 8546596c44b4ad61c7e3c5e12a7812bef8b20af1
+=======
+>>>>>>> 434e15db4ea578d2647445ce47c54521ff6ee200
 /* Results Container */
 
 .resultsContainer ul {

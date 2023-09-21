@@ -5,7 +5,7 @@ import React from 'react';
 function Header() {
     return (
         <header>
-            <h1>App Prioritizer</h1>
+            <img src={process.env.PUBLIC_URL + '/podcastLogo'} Alt='Podcast prioritizer logo'/>
         </header>
     );
 }
