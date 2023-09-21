@@ -3,7 +3,7 @@ import axios from "axios";
 // css
 import "./DistanceCalculator.css";
 
-const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
+const DistanceCalculator = ({ distance, setDistance }) => {
   // State variables to store user's chosen start and end locations
   const [startLocation, setStartLocation] = useState("");
   const [endLocation, setEndLocation] = useState("");
@@ -37,12 +37,17 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
   // Calculates the distance using the MapQuest API
   const calculateDistance = async () => {
     try {
-      if (!startLocation || !endLocation || startLocation === endLocation) {
-        // Handles invalid input
-        setErrorMessage("Please enter valid start and end locations.");
-        return;
+      if (!startLocation && !endLocation) {
+        setErrorMessage("Please enter in a starting point and destination");
+      } else if (!startLocation) {
+        setErrorMessage("Please enter a starting location.");
+      } else if (!endLocation) {
+        setErrorMessage("Please enter a destination.");
+      } else if (startLocation === endLocation) {
+        setErrorMessage(
+          "Starting location and destination can not be the same. "
+        );
       }
-
       // Clear any previous error messages
       setErrorMessage(null);
 
@@ -67,9 +72,7 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
       console.error("Error calculating distance:", error);
     }
   };
-  // Determine a suggestion (bike or walk) based on the calculated distance
-  const modeOfTravelSuggestion =
-    distance > 2 ? (podcastLength > 1000 ? "bike" : "walk") : "walk";
+
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevents the default form submission behaviour
@@ -200,7 +203,6 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
         "--input-height",
         `${inputHeight}px`
       );
-      console.log(inputHeight);
     }
     //remove the event listeners on unMount
     return () => {
@@ -314,26 +316,12 @@ const DistanceCalculator = ({ distance, setDistance, podcastLength }) => {
               })}
           </ul>
         </div>
+
         {/* Calculate Distance Button */}
         <div className="Submit">
           <button type="submit">Calculate</button>
         </div>
       </form>
-      {/* Displays the calculated distance and suggestion */}
-      {!isNaN(distance) && distance !== null ? (
-        startLocation !== "" && endLocation !== "" ? (
-          <p>
-            It would be best to {modeOfTravelSuggestion} for this trip!
-            (Distance: {distance.toFixed(2)}km)
-          </p>
-        ) : (
-          <p>
-            something went wrong, please double check your destination and start
-            location inputs.
-          </p>
-        )
-      ) : null}
-
       {/* Displays error message */}
       {errorMessage && <p className="error">{errorMessage}</p>}
     </>
