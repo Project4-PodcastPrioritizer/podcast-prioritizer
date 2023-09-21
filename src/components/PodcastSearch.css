@@ -2,19 +2,21 @@
 .podcastSearch {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   width: 100%;
+  border-bottom: var(--inputBottomBorder);
 }
-
-button {
-  background-color: rgba(245, 245, 245, 0);
-  border-radius: 5px;
-  width: fit-content;
+.podcastSearchSubmit {
+  background-color: #D3CFE6;
+  border: none;
+  border-radius: 10px;
   transition: 0.15s ease-in;
-  padding: 0;
+  padding: .09rem 1rem;
+  
 }
 
-button:hover {
-  background-color: rgba(245, 245, 245, 0.613);
+.podcastSearchSubmit:hover {
+  background-color: #7e779d;
 }
 
 h3{
@@ -23,10 +25,14 @@ h3{
 
 /* input field */
 .podcastSearch form{
+  display: flex;
+  background-color: white;
   width: 100%;
 }
 #search{
   width: 100%;
+  border: none;
+  padding: var(--inputPadding);
 }
 
 /* Results Container */
@@ -39,22 +45,23 @@ h3{
 }
 .results {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 2rem;
-  padding: 1rem 1rem;
+  padding: 1rem 0;
+  gap: 1rem;
   margin: 1rem 0 0 0 0;
   opacity: 0.1;
   border-radius: 5px;
   color: black;
-  height: 50rem;
-  width: 40rem;
+  height: 15%;
+  width: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
 }
 
 .results li {
   font-weight: 600;
-  width: 10rem;
+  width: 12rem;
   display: flex;
   flex-direction: column;
   align-items: center;

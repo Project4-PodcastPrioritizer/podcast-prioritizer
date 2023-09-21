@@ -319,7 +319,7 @@ const DistanceCalculator = ({ distance, setDistance }) => {
 
         {/* Calculate Distance Button */}
         <div className="Submit">
-          <button type="submit">Calculate</button>
+          <button type="submit" className="distanceSubmit">Calculate</button>
         </div>
       </form>
       {/* Displays error message */}
