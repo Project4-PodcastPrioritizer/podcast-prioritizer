@@ -1,8 +1,8 @@
 /* general component styling */
 .podcastSearch {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 button {
@@ -19,6 +19,14 @@ button:hover {
 
 h3{
     font-size: 1rem;
+}
+
+/* input field */
+.podcastSearch form{
+  width: 100%;
+}
+#search{
+  width: 100%;
 }
 
 /* Results Container */
