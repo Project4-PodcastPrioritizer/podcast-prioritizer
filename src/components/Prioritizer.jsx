@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-
 import DistanceCalculator from "./DistanceCalculator";
 import PodcastSearch from "./PodcastSearch";
+import "./Prioritizer.css";
 
 const Prioritizer = ({
   distance,
@@ -18,7 +18,7 @@ const Prioritizer = ({
       ? "walk"
       : "bike, please be alert at all times and remember to not have your volume too loud";
   return (
-    <>
+    <div className="app">
       <PodcastSearch
         setPodcast={setPodcast}
         setLength={setLength}
@@ -63,7 +63,7 @@ const Prioritizer = ({
           </div>
         </>
       ) : null}
-    </>
+    </div>
   );
 };
 export default Prioritizer;

@@ -1,11 +1,26 @@
 .DistanceCalculator {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
   box-sizing: content-box;
   position: relative;
+  width: 100%;
 }
 
+.Start,
+.End{
+  width: 100%;
+}
+.Start{
+  border-bottom: 1px solid rgb(237, 237, 237);
+}
+.Start input,
+.End input {
+  width: 100%;
+  height: inherit;
+  padding:.5rem 0;
+}
 .Start,
 .End,
 .Submit {
@@ -14,27 +29,19 @@
   height: inherit;
 }
 .Submit {
-  background-color: white;
+  /* background-color: white; */
   height: calc(var(--input-height) + 0.4px);
   display: flex;
-  align-items: center;
+  justify-content: center;
 }
 .Start input,
 .End input,
 .Submit button {
   margin: 0;
   border: 0;
-  padding: 5px;
   transition: 0.25s ease-in-out;
 }
-.Start input,
-.End input {
-  width: 15rem;
-  height: inherit;
-}
-.Start input {
-  border-right: 1px solid #d3cfe6;
-}
+
 .Start ul,
 .End ul {
   margin-top: 5px;
@@ -45,9 +52,14 @@
   position: absolute;
   width: var(--form-width);
   border-radius: 5px;
-  top: 3rem;
   left: 0;
   transition: 0.25s linear;
+}
+.Start ul{
+  top:2rem;
+}
+.End ul{
+  top:4.2rem;
 }
 .Start li,
 .End li {
