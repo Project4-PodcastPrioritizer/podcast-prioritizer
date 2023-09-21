@@ -1,0 +1,54 @@
+.DistanceCalculator{
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+}
+
+.Start, .End, .Submit{
+    margin: 0;
+    padding: 0;
+}
+
+.Start, .End{
+    position: relative;
+}
+
+.Start input, .End input, .Submit button{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    padding: 5px;
+}
+.Start ul, .End ul{
+    margin-top: 5px;
+    background-color: whitesmoke;
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    position: absolute;
+    width: var(--form-width);
+    
+  b    top: 3rem;
+    border-radius: 5px;
+}
+.Start li, .End li{
+    width: inherit;
+    color: black;
+    text-align: "";
+}
+.Start p, .End p{
+    text-align: left;
+}
+.Submit{
+    display: flex;
+    background-color: white;
+    align-items: center;
+    padding: 0 5px 0 5px ;
+}
+.Submit button{
+    font-size: .75rem;
+    font-weight: 500;
+    border: 1px #c2edd8 solid;
+    background-color: #c2edd8;
+    color: Black;
+}
