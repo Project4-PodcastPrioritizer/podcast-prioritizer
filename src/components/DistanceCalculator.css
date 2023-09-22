@@ -13,13 +13,13 @@
   width: 100%;
 }
 .Start{
-  border-bottom: 1px solid rgb(237, 237, 237);
+  border-bottom: var(--inputBottomBorder)
 }
 .Start input,
 .End input {
   width: 100%;
   height: inherit;
-  padding:.5rem 0;
+  padding:var(--inputPadding);
 }
 .Start,
 .End,
@@ -72,20 +72,21 @@
   text-align: left;
 }
 
-.Submit button {
-  /* font-size: 0.75rem; */
+.Submit .distanceSubmit {
+  /* position: static; */
   font-weight: 500;
-  border: 1px #c2edd8 solid;
   background-color: #c2edd8;
   color: Black;
-  padding: 1px;
   width: auto;
-  box-sizing: border-box;
   transition: 0.25s ease-in-out;
+  border: none;
+  border-radius: 10px;
+  transition: 0.15s ease-in;
+  padding: .09rem 1rem;
 }
-.Submit button:hover,
-.Submit button:focus,
-.Submit button:target {
+.Submit .distanceSubmit:hover,
+.Submit .distanceSubmit:focus,
+.Submit .distanceSubmit:target {
   background-color: #498a6a;
 }
 .Start input:focus,

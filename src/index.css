@@ -1,3 +1,8 @@
+#root{
+    --inputPadding: 0.5rem 0;
+    --inputBottomBorder:1px solid rgb(237, 237, 237);
+}
+
 body{
     background-color:#001e31;
     color: white;

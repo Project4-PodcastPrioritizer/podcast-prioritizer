@@ -6,7 +6,7 @@ import { useTransition, animated } from "react-spring";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
-const searchIcon = <FontAwesomeIcon icon={faMagnifyingGlass} size="xs" />;
+const searchIcon = <FontAwesomeIcon icon={faMagnifyingGlass} size="s" style={{color:"#ffffff",}}/>;
 
 const PodcastSearch = ({ setPodcast, setLength, currentPodcast }) => {
   //INPUT STATE
@@ -111,7 +111,7 @@ const PodcastSearch = ({ setPodcast, setLength, currentPodcast }) => {
             onChange={handleInputChange}
             placeholder="Search Some Podcasts"
           />
-          <button onClick={handlePodcastGet}>{searchIcon}</button>
+          <button onClick={handlePodcastGet} className="podcastSearchSubmit">{searchIcon}</button>
         </form>
       ) : null}
 
