@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import DistanceCalculator from "./DistanceCalculator";
 import PodcastSearch from "./PodcastSearch";
@@ -10,14 +11,11 @@ const Prioritizer = ({
   podcastLength,
   setLength,
   setDistance,
+  start,
+  end,
+  setStart,
+  setEnd
 }) => {
-  const modeOfTravelSuggestion =
-    distance > 2 && currentPodcast.length !== 0
-      ? podcastLength > 1000
-        ? "Walk!"
-        : "Bike!, please be safe and remember to be vigilant on your travels."
-      : null;
-
   return (
     <div className="app">
       <PodcastSearch
@@ -32,6 +30,8 @@ const Prioritizer = ({
               setPodcast([]);
               setLength("");
               setDistance("");
+              setEnd("");
+              setStart("");
             }}
           >
             Change selection
@@ -47,18 +47,15 @@ const Prioritizer = ({
         </>
       ) : null}
       <DistanceCalculator
+        start={start}
+        end={end}
+        setStart={setStart}
+        setEnd={setEnd}
         distance={distance}
         setDistance={setDistance}
         podcastLength={podcastLength}
+        currentPodcast={currentPodcast}
       />
-      {distance !== null && distance > 0 && currentPodcast.length !== 0 && (
-        <div className="suggestion">
-          <p>
-            If you're going to listen to {currentPodcast.podcast_title_original}{" "}
-            then you should {modeOfTravelSuggestion}!
-          </p>
-        </div>
-      )}
     </div>
   );
 };
