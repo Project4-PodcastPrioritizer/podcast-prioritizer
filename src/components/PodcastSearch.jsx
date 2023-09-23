@@ -13,7 +13,8 @@ const PodcastSearch = ({ setPodcast, setLength, currentPodcast }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [podcastResults, setPodcastResults] = useState([]); // results found from call
   const [dataFound, setDataFound] = useState(null); // if user query yields results or not
-  const [loading, setLoading] = useState(null); // displays loading animation while api call being made
+  const [loading, setLoading] = useState(null); // animation while api loading
+  const [showDialog, setShowDialog] = useState(false); // used for notifying users that search cant be empty.
 
   // PASS TO PARENT  STATES
   const [selectedPodcast, setSelectedPodcast] = useState([]); // selected podcasts object from podcastResults
@@ -36,8 +37,9 @@ const PodcastSearch = ({ setPodcast, setLength, currentPodcast }) => {
 
     // TODO: prevent user from inputing empty query
     if (searchTerm === "") {
-      alert(`Please enter something!`);
+      setShowDialog(true);
     } else {
+      setShowDialog(false);
       // function variables.
       const apiKey = import.meta.env.VITE_LISTEN_API_KEY;
       const query = searchTerm;
@@ -137,6 +139,13 @@ const PodcastSearch = ({ setPodcast, setLength, currentPodcast }) => {
           )}
         </div>
       ) : null}
+
+      {!showDialog ? null : 
+      <dialog style={{ zIndex: 2 }} open>
+        <h2>Please search for some podcasts!</h2>
+        <button onClick={()=>{setShowDialog(false)}}>ok</button>
+      </dialog>
+      }
     </div>
   );
 };

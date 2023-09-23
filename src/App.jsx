@@ -7,6 +7,8 @@ function App() {
   const [selectedPodcast, setSelectedPodcast] = useState([]);
   const [podcastLength, setPodcastLength] = useState("");
   const [distance, setDistance] = useState(null);
+  const [startLocation, setStartLocation] = useState("");
+  const [endLocation, setEndLocation] = useState("");
 
   return (
     <>
@@ -17,22 +19,11 @@ function App() {
         setLength={setPodcastLength}
         setDistance={setDistance}
         podcastLength={podcastLength}
+        setStart={setStartLocation}
+        setEnd={setEndLocation}
+        start={startLocation}
+        end={endLocation}
       />
-
-      {/* {selectedPodcast.length===0 ?
-      <PodcastSearch
-        setPodcast={setSelectedPodcast}
-        setLength={setPodcastLength}
-      />
-     : null}
-    
-      {selectedPodcast.length === 0 ? null : (
-        <DistanceCalculator
-          distance={distance}
-          setDistance={setDistance}
-          podcastLength={podcastLength}
-        />
-      )} */}
     </>
   );
 }
