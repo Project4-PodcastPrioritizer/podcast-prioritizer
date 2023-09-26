@@ -6,6 +6,10 @@
   width: 100%;
   border-bottom: var(--inputBottomBorder);
 }
+.noBorder{
+  border-bottom: none;
+}
+
 .podcastSearchSubmit {
   background-color: #D3CFE6;
   border: none;
@@ -103,7 +107,7 @@ h3{
 
 /* loading animation */
 .loader {
-  margin-top: 2rem;
+  margin: 2rem 0 2rem 0;
   border: 5px solid #f3f3f300;
   border-top: 5px solid #bcffe0;
   border-bottom: 5px solid #bcffe0;

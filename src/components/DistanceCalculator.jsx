@@ -70,7 +70,7 @@ const DistanceCalculator = ({
             },
           }
         );
-        console.log(response.data.route);
+        // console.log(response.data.route);
         // check if inputed locations return route error.
         if (response.data.route.routeError) {
           // Invalid address, set an error message
@@ -118,22 +118,28 @@ const DistanceCalculator = ({
   };
 
   useEffect(() => {
-    if (start && end && distance) {
-      if (podcastLength === undefined || podcastLength === 0) {
-        setModeOfTravel(""); // Clear modeOfTravel
-        setErrorMessage("Please search a podcast to listen to!");
+   if (start && end && distance) {
+      if (currentPodcast.length !== undefined) {
+        console.log(currentPodcast.length)
+        console.log("there is a selected podcast now")
+        setModeOfTravel(""); // Clear modeOfTravel if any
+        setErrorMessage("Please search for a podcast to listen to!");
       } else if (distance > 2) {
+        setErrorMessage(""); // Clear error message if any
         setModeOfTravel(
           "bike 🚴‍♂️ Safety Reminder: When biking, please ensure your headphones are at a safe volume to stay aware of your surroundings. Your safety is important!"
         );
       } else if (distance < 2) {
+        setErrorMessage(""); // Clear error message if any
         setModeOfTravel("walk 🚶‍♂️.");
       }
     } else {
-      setModeOfTravel(""); // Clear modeOfTravel
+      // clear all states related.
+      setModeOfTravel(""); 
       setErrorMessage("");
     }
-  }, [start, end, podcastLength, distance]);
+  }, [start, end, distance, currentPodcast]);
+  
   
   // TODO FIX THIS!!!! NEEDS TO RENDER 
     // SELECT PODCAST => WHEN NO PODCAST LENGTH OR CURRENT PODCAST.

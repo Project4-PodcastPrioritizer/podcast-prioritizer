@@ -29,7 +29,7 @@
   height: inherit;
 }
 .Submit {
-  /* background-color: white; */
+  margin-top: .5rem;
   height: calc(var(--input-height) + 0.4px);
   display: flex;
   justify-content: center;
@@ -108,14 +108,12 @@
   }
   .Start,
   .End {
-    margin-top: 2px;
     position: relative;
   }
   .Start input,
   .End input,
   .Submit {
     border: none;
-    border-radius: 5px;
   }
   .Start input,
   .End input {
