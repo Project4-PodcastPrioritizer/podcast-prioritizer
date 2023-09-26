@@ -23,6 +23,7 @@ const Prioritizer = ({
         setLength={setLength}
         currentPodcast={currentPodcast}
       />
+
       {currentPodcast.length !== 0 ? (
         <>
           <button
@@ -38,11 +39,17 @@ const Prioritizer = ({
           </button>
           <h2>Chosen Podcast</h2>
           <div className="selected">
-            <li key={currentPodcast.id}>
+            <div key={currentPodcast.id}>
               <img src={currentPodcast.image} className="thumbnail" />
-              <p>{currentPodcast.podcast_title_original}</p>
+              <p>{currentPodcast.podcast_title_original} by {currentPodcast.publisher_original}</p>
               <p>{currentPodcast.title_original}</p>
-            </li>
+              <ul className="links">
+                <li title="Listen to this podcast">
+                  <a href={currentPodcast.link}><img src="/src/assets/listen-to.svg" alt="Listen To this podcast!" /></a>
+                </li>
+                <li title="Learn more about this podcast"><a href={currentPodcast.listennotes_url}><img src="/src/assets/about.svg" alt="Learn more about this podcast over at ListenNotes" /></a></li>
+              </ul>
+            </div>
           </div>
         </>
       ) : null}
