@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
 import DistanceCalculator from "./DistanceCalculator";
 import PodcastSearch from "./PodcastSearch";
 import "./Prioritizer.css";
 
 const Prioritizer = ({
+  searchTerm,
+  setSearchTerm, 
   distance,
   currentPodcast,
   setPodcast,
@@ -22,22 +23,25 @@ const Prioritizer = ({
         setPodcast={setPodcast}
         setLength={setLength}
         currentPodcast={currentPodcast}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
       />
 
       {currentPodcast.length !== 0 ? (
         <>
           <button
+          // reset all states.
             onClick={() => {
               setPodcast([]);
               setLength("");
               setDistance("");
               setEnd("");
               setStart("");
+              setSearchTerm("");
             }}
           >
-            Change selection
+            Change Podcast
           </button>
-          <h2>Chosen Podcast</h2>
           <div className="selected">
             <div key={currentPodcast.id}>
               <img src={currentPodcast.image} className="thumbnail" />
