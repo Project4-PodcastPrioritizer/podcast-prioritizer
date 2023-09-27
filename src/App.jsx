@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Prioritizer from "./components/Prioritizer";
 
 import "./App.css";
