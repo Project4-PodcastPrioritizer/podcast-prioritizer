@@ -1,30 +1,18 @@
-import { useState, useEffect } from "react";
-import PodcastSearch from "./components/PodcastSearch";
-import DistanceCalculator from "./components/DistanceCalculator";
-import Header from "./components/Header";
+import { useState } from "react";
 import Prioritizer from "./components/Prioritizer";
+import Header from "./componnents/Header";
+
 import "./App.css";
 
 function App() {
   const [selectedPodcast, setSelectedPodcast] = useState([]);
   const [podcastLength, setPodcastLength] = useState("");
   const [distance, setDistance] = useState(null);
+  const [startLocation, setStartLocation] = useState("");
+  const [endLocation, setEndLocation] = useState("");
 
   return (
     <>
-    <Header />
-    <button 
-    onClick={()=>{
-      setPodcastLength("");
-      setSelectedPodcast([]);
-    }}
-    disabled={selectedPodcast.length === 0 ? true:false}
-    >
-      New Trip
-    </button>
-    {/* render First podcast Choice */}
-     {selectedPodcast.length===0 ? (
-
       <Prioritizer
         distance={distance}
         setPodcast={setSelectedPodcast}
@@ -32,8 +20,11 @@ function App() {
         setLength={setPodcastLength}
         setDistance={setDistance}
         podcastLength={podcastLength}
+        setStart={setStartLocation}
+        setEnd={setEndLocation}
+        start={startLocation}
+        end={endLocation}
       />
-  ) : null}
     </>
   );
 }
