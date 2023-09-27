@@ -4,6 +4,17 @@
   flex-direction: column;
   align-items: center;
 }
+
+.app button{
+  border-radius: 50px;
+  border: none;
+  padding: .5rem;
+  cursor: pointer;
+  transition: .25s ease-in-out;
+}
+.app button:hover{
+  filter: brightness(75%);
+}
 .selected{
   display: flex;
   justify-content: center;
@@ -16,9 +27,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background-color: #d3cfe6;
+  background-color: #262626;
   border-radius: 15px;
-  color: #001e31;
+  color:  #d3cfe6;
   padding: 1rem;
 }
 .selected div p{
@@ -30,6 +41,7 @@
 .selected div img{
     width: 75%;
     border-radius: 15px;
+    margin:0 0 1rem 0;
 }
 .links{
   padding: 0;
@@ -38,7 +50,13 @@
 }
 .links li{
   list-style: none;
+  width: 75px;
 }
 .links li img{
-  width: 50px;
+  width: 100%;
+  transition: .2s ease-in-out;
+}
+
+.links li img:hover, .links li img:focus, .links li img:target{
+  filter: brightness(50%);
 }

@@ -74,10 +74,8 @@
 }
 
 .Submit .distanceSubmit {
-  /* position: static; */
   font-weight: 500;
-  background-color: #c2edd8;
-  color: Black;
+  background-color:  #c2edd8;
   width: auto;
   transition: 0.25s ease-in-out;
   border: none;
@@ -88,7 +86,9 @@
 .Submit .distanceSubmit:hover,
 .Submit .distanceSubmit:focus,
 .Submit .distanceSubmit:target {
-  background-color: #498a6a;
+  background-color: #c2edd8;
+  filter:brightness(75%);
+  cursor: pointer;
 }
 .Start input:focus,
 .End input:focus,

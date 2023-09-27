@@ -4,6 +4,7 @@ import Prioritizer from "./components/Prioritizer";
 import "./App.css";
 
 function App() {
+  const [podcastSearchTerm, setPodcastSearchTerm] = useState("");
   const [selectedPodcast, setSelectedPodcast] = useState([]);
   const [podcastLength, setPodcastLength] = useState("");
   const [distance, setDistance] = useState(null);
@@ -13,6 +14,8 @@ function App() {
   return (
     <>
       <Prioritizer
+        searchTerm ={podcastSearchTerm}
+        setSearchTerm={setPodcastSearchTerm}
         distance={distance}
         setPodcast={setSelectedPodcast}
         currentPodcast={selectedPodcast}
