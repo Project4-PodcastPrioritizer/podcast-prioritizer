@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Prioritizer from "./components/Prioritizer";
-import Header from "./componnents/Header";
+import Header from "./components/Header";
+import AppBriefDescription from "./components/AppBriefDescription";
 
 import "./App.css";
 
