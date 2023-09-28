@@ -4,12 +4,9 @@
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-  border-bottom: var(--inputBottomBorder);
   margin-bottom: 1rem;
 }
-.noBorder{
-  border-bottom: none;
-}
+
 
 .podcastSearchSubmit {
   margin-right: 1rem;

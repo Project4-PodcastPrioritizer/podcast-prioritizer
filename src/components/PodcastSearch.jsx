@@ -69,16 +69,6 @@ const PodcastSearch = ({ setPodcast, setLength, currentPodcast,searchTerm, setSe
     }
   };
 
-
-
-
-
-
-
-
-
-
-
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -159,7 +149,7 @@ const PodcastSearch = ({ setPodcast, setLength, currentPodcast,searchTerm, setSe
   }, [podcastResults]);
 
   return (
-    <div className={`podcastSearch ${currentPodcast.length !== 0 ? "noBorder" : ""}`}>
+    <div className="podcastSearch">
       
       {currentPodcast.length === 0 ? (
         <form action="submit">
