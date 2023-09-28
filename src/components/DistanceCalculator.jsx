@@ -1,13 +1,19 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 // css
 import "./DistanceCalculator.css";
 
-const DistanceCalculator = ({ distance, setDistance }) => {
-  // State variables to store user's chosen start and end locations
-  const [startLocation, setStartLocation] = useState("");
-  const [endLocation, setEndLocation] = useState("");
-
+const DistanceCalculator = ({
+  distance,
+  setDistance,
+  podcastLength,
+  currentPodcast,
+  start,
+  setStart,
+  end,
+  setEnd,
+}) => {
   const [startSuggestionClicked, setStartSuggestionClicked] = useState(false);
   const [endSuggestionClicked, setEndSuggestionClicked] = useState(false);
   // State variables to store auto suggestions for start and end locations
@@ -15,6 +21,9 @@ const DistanceCalculator = ({ distance, setDistance }) => {
   const [endSuggestions, setEndSuggestions] = useState([]);
   // State variable to store error messages
   const [errorMessage, setErrorMessage] = useState(null);
+
+  //mode of travel state
+  const [modeOfTravel, setModeOfTravel] = useState("");
 
   //Refs to manipulate the dom after rendering.
   const startLocationSuggestionsRef = useRef(null);
@@ -24,50 +33,56 @@ const DistanceCalculator = ({ distance, setDistance }) => {
 
   const handleStartSuggestionClick = (suggestion) => {
     let suggestionString = `${suggestion.street} ${suggestion.city} ${suggestion.state} ${suggestion.countryCode}`;
-    setStartLocation(suggestionString);
+    setStart(suggestionString);
     setStartSuggestions([]);
     setStartSuggestionClicked(true);
   };
   const handleEndSuggestionClick = (suggestion) => {
     let suggestionString = `${suggestion.street} ${suggestion.city} ${suggestion.state} ${suggestion.countryCode}`;
-    setEndLocation(suggestionString);
+    setEnd(suggestionString);
     setEndSuggestionClicked(true);
     setEndSuggestions([]);
   };
   // Calculates the distance using the MapQuest API
   const calculateDistance = async () => {
+    // Clear previous Error if any
+    setErrorMessage(null);
     try {
-      if (!startLocation && !endLocation) {
+      if (!start && !end) {
         setErrorMessage("Please enter in a starting point and destination");
-      } else if (!startLocation) {
+      } else if (!start) {
         setErrorMessage("Please enter a starting location.");
-      } else if (!endLocation) {
+      } else if (!end) {
         setErrorMessage("Please enter a destination.");
-      } else if (startLocation === endLocation) {
+      } else if (start === end) {
         setErrorMessage(
           "Starting location and destination can not be the same. "
         );
-      }
-      // Clear any previous error messages
-      setErrorMessage(null);
+      } else {
+        const response = await axios.get(
+          "https://www.mapquestapi.com/directions/v2/route",
+          {
+            params: {
+              key: "Ua9N73Lhw2Tg18LuWk3hcW9q4Pp09UKM",
+              from: start,
+              to: end,
+              unit: "k",
+            },
+          }
+        );
+        // console.log(response.data.route);
+        // check if inputed locations return route error.
+        if (response.data.route.routeError) {
+          // Invalid address, set an error message
+          setErrorMessage("Entered addresses are invalid, please try again");
+        } else {
+          const calculatedDistanceInMiles = response.data.route.distance;
+          // Converts miles to kilometers
+          const calculatedDistanceInKm = calculatedDistanceInMiles * 1.60934;
 
-      const response = await axios.get(
-        "https://www.mapquestapi.com/directions/v2/route",
-        {
-          params: {
-            key: "Ua9N73Lhw2Tg18LuWk3hcW9q4Pp09UKM",
-            from: startLocation,
-            to: endLocation,
-            unit: "k",
-          },
+          setDistance(calculatedDistanceInKm);
         }
-      );
-
-      const calculatedDistanceInMiles = response.data.route.distance;
-      // Converts miles to kilometers
-      const calculatedDistanceInKm = calculatedDistanceInMiles * 1.60934;
-
-      setDistance(calculatedDistanceInKm);
+      }
     } catch (error) {
       console.error("Error calculating distance:", error);
     }
@@ -101,11 +116,41 @@ const DistanceCalculator = ({ distance, setDistance }) => {
       setEndSuggestions([]);
     }
   };
+
+  useEffect(() => {
+   if (start && end && distance) {
+      if (currentPodcast.length !== undefined) {
+        console.log(currentPodcast.length)
+        console.log("there is a selected podcast now")
+        setModeOfTravel(""); // Clear modeOfTravel if any
+        setErrorMessage("Please search for a podcast to listen to!");
+      } else if (distance > 2) {
+        setErrorMessage(""); // Clear error message if any
+        setModeOfTravel(
+          "bike 🚴‍♂️ Safety Reminder: When biking, please ensure your headphones are at a safe volume to stay aware of your surroundings. Your safety is important!"
+        );
+      } else if (distance < 2) {
+        setErrorMessage(""); // Clear error message if any
+        setModeOfTravel("walk 🚶‍♂️.");
+      }
+    } else {
+      // clear all states related.
+      setModeOfTravel(""); 
+      setErrorMessage("");
+    }
+  }, [start, end, distance, currentPodcast]);
+  
+  
+  // TODO FIX THIS!!!! NEEDS TO RENDER 
+    // SELECT PODCAST => WHEN NO PODCAST LENGTH OR CURRENT PODCAST.
+    // NULL => WHEN NO PODCAST AND STATES ARE EMPTY. 
+
+  
   useEffect(() => {
     // Function to fetch auto suggestions for start location
     const fetchStartSuggestions = async () => {
       try {
-        if (startLocation === "") {
+        if (start === "") {
           setStartSuggestions([]); // Clears suggestions when input is empty
           return;
         }
@@ -117,7 +162,7 @@ const DistanceCalculator = ({ distance, setDistance }) => {
             {
               params: {
                 key: "Ua9N73Lhw2Tg18LuWk3hcW9q4Pp09UKM",
-                location: startLocation,
+                location: start,
                 maxResults: 5,
               },
             }
@@ -141,13 +186,13 @@ const DistanceCalculator = ({ distance, setDistance }) => {
     };
     // Call the fetchStartSuggestions function when startLocation or suggestionClicked changes
     fetchStartSuggestions();
-  }, [startLocation, startSuggestionClicked]);
+  }, [start, startSuggestionClicked]);
 
   useEffect(() => {
     // Function to fetch auto suggestions for end location
     const fetchEndSuggestions = async () => {
       try {
-        if (endLocation === "") {
+        if (end === "") {
           setEndSuggestions([]); // Clear suggestions when input is empty
           return;
         }
@@ -157,7 +202,7 @@ const DistanceCalculator = ({ distance, setDistance }) => {
             {
               params: {
                 key: "Ua9N73Lhw2Tg18LuWk3hcW9q4Pp09UKM",
-                location: endLocation,
+                location: end,
                 maxResults: 5,
               },
             }
@@ -182,7 +227,7 @@ const DistanceCalculator = ({ distance, setDistance }) => {
 
     // Calls the fetchEndSuggestions function when endLoation changes
     fetchEndSuggestions();
-  }, [endLocation, endSuggestionClicked]);
+  }, [end, endSuggestionClicked]);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleStartLocationOutsideClick);
@@ -215,6 +260,11 @@ const DistanceCalculator = ({ distance, setDistance }) => {
     };
   }, [startLocationSuggestionsRef, endLocationSuggestionsRef]);
 
+  useEffect(()=>{
+    if(!start && !end ){
+      setDistance("")
+    }
+  },[start,end])
   return (
     <>
       <form
@@ -229,13 +279,13 @@ const DistanceCalculator = ({ distance, setDistance }) => {
           </label>
           <input
             type="text"
-            value={startLocation}
+            value={start}
             onClick={() => {
               setEndSuggestions([]);
             }}
             onChange={(e) => {
               setStartSuggestionClicked(false);
-              setStartLocation(e.target.value);
+              setStart(e.target.value);
               setErrorMessage(null); // Clears error message
             }}
             required
@@ -277,12 +327,12 @@ const DistanceCalculator = ({ distance, setDistance }) => {
           </label>
           <input
             type="text"
-            value={endLocation}
+            value={end}
             onClick={() => {
               setStartSuggestions([]);
             }}
             onChange={(e) => {
-              setEndLocation(e.target.value);
+              setEnd(e.target.value);
               setEndSuggestionClicked(false);
             }}
             required
@@ -319,11 +369,21 @@ const DistanceCalculator = ({ distance, setDistance }) => {
 
         {/* Calculate Distance Button */}
         <div className="Submit">
-          <button type="submit" className="distanceSubmit">Calculate</button>
+          <button type="submit" className="distanceSubmit">
+            Calculate
+          </button>
         </div>
       </form>
-      {/* Displays error message */}
+      {/* Displays error message if any */}
       {errorMessage && <p className="error">{errorMessage}</p>}
+      {/* Display suggestion of travel. */}
+
+      {modeOfTravel === "" ? null : (
+        <p className="travelSuggestion">
+          if you want to listen to {currentPodcast.title_original} then you
+          should {modeOfTravel}{" "}
+        </p>
+      )}
     </>
   );
 };
