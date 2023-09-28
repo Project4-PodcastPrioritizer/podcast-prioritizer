@@ -49,9 +49,9 @@ const Prioritizer = ({
               <p>{currentPodcast.title_original}</p>
               <ul className="links">
                 <li title="Listen to this podcast">
-                  <a href={currentPodcast.link}><img src="/public/src/assets/about.svg" alt="Listen To this podcast!" /></a>
+                  <a href={currentPodcast.link}><img src="/assets/listen-to.svg" alt="Listen To this podcast!" /></a>
                 </li>
-                <li title="Learn more about this podcast"><a href={currentPodcast.listennotes_url}><img src="/public/src/assets/about.svg" alt="Learn more about this podcast over at ListenNotes" /></a></li>
+                <li title="Learn more about this podcast"><a href={currentPodcast.listennotes_url}><img src="/assets/about.svg" alt="Learn more about this podcast over at ListenNotes" /></a></li>
               </ul>
             </div>
           </div>
