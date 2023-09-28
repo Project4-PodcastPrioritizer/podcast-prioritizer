@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
+import { useState, useEffect } from "react";
 import DistanceCalculator from "./DistanceCalculator";
 import PodcastSearch from "./PodcastSearch";
+import { useTransition, animated } from "react-spring";
 import "./Prioritizer.css";
 
 const Prioritizer = ({
@@ -17,6 +19,25 @@ const Prioritizer = ({
   setStart,
   setEnd
 }) => {
+
+  // MOUNTING STATE
+  const [isVisible, setIsVisible] = useState(false);
+  const mountedTransition = useTransition(isVisible, {
+    config: { duration: 500 }, // .5s animation time.
+    from: { x: 0, y: 0, opacity: 0 },
+    enter: { x: 0, y: 0, opacity: 1 },
+    leave: { x: 0, y: 0, opacity: 0 },
+  });
+
+useEffect(()=>{
+  if (currentPodcast.length !== 0) {
+    console.log("true")
+    setIsVisible(true);
+  } else{
+    setIsVisible(false);
+  }
+},[currentPodcast])
+
   return (
     <div className="app">
       <PodcastSearch
@@ -27,9 +48,11 @@ const Prioritizer = ({
         setSearchTerm={setSearchTerm}
       />
 
-      {currentPodcast.length !== 0 ? (
+      {currentPodcast.length !== 0 ?
+      
+      (
         <>
-          <button
+          <button className="changeSelectionButton"
           // reset all states.
             onClick={() => {
               setPodcast([]);
@@ -42,21 +65,25 @@ const Prioritizer = ({
           >
             Change Podcast
           </button>
-          <div className="selected">
-            <div key={currentPodcast.id}>
+          {mountedTransition((style,item) =>
+            item ? (
+              <animated.div style={style} className="selected">
               <img src={currentPodcast.image} className="thumbnail" />
-              <p>{currentPodcast.podcast_title_original} by {currentPodcast.publisher_original}</p>
-              <p>{currentPodcast.title_original}</p>
+              <p className="podcastTitle">{currentPodcast.podcast_title_original}</p>
+              <p className="episode">{currentPodcast.title_original}</p>
+              <p className="publisher">{currentPodcast.publisher_original}</p>
               <ul className="links">
                 <li title="Listen to this podcast">
                   <a href={currentPodcast.link}><img src="/assets/listen-to.svg" alt="Listen To this podcast!" /></a>
                 </li>
                 <li title="Learn more about this podcast"><a href={currentPodcast.listennotes_url}><img src="/assets/about.svg" alt="Learn more about this podcast over at ListenNotes" /></a></li>
               </ul>
-            </div>
-          </div>
+          </animated.div>
+            ):null
+          )}
         </>
-      ) : null}
+      ) 
+      : null}
       <DistanceCalculator
         start={start}
         end={end}
