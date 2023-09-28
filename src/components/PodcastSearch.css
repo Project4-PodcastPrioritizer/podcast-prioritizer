@@ -158,4 +158,13 @@ dialog button:focus, dialog button:target{
   border: solid 2px pink;
 }
 
-/* Get images from the api instead to display. Make text a fallback incase shit dont load */
+
+@media (max-width: 500px) {
+  .podcastSearch{
+    width: 80%;
+  }
+  dialog{
+    width: 60%;
+  }
+}
+

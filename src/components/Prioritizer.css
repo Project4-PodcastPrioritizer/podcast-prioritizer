@@ -60,3 +60,13 @@
 .links li img:hover, .links li img:focus, .links li img:target{
   filter: brightness(50%);
 }
+
+
+@media (max-width: 500px) {
+  .selected div{
+    padding: 1rem 1rem 0rem 1rem;
+  }
+  .selected div img{
+    width: 60%;
+  }
+}
