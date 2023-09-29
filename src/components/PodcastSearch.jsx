@@ -159,7 +159,7 @@ const PodcastSearch = ({ setPodcast, setLength, currentPodcast,searchTerm, setSe
             type="text"
             id="search"
             onChange={handleInputChange}
-            placeholder="Search Some Podcasts"
+            placeholder=" Search Some Podcasts"
           />
           <button onClick={handlePodcastGet} className="podcastSearchSubmit">{searchIcon}</button>
         </form>
