@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Prioritizer from "./components/Prioritizer";
-
-import "./App.css";
+import Header from "./components/Header";
+import AppBrief from "./components/AppBrief";
 
 function App() {
   const [podcastSearchTerm, setPodcastSearchTerm] = useState("");
@@ -13,6 +13,7 @@ function App() {
 
   return (
     <>
+      <Header />
       <Prioritizer
         searchTerm ={podcastSearchTerm}
         setSearchTerm={setPodcastSearchTerm}
@@ -27,8 +28,10 @@ function App() {
         start={startLocation}
         end={endLocation}
       />
+      <AppBrief />
     </>
   );
 }
 
 export default App;
+

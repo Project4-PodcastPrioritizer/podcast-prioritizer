@@ -81,6 +81,7 @@ const DistanceCalculator = ({
           const calculatedDistanceInKm = calculatedDistanceInMiles * 1.60934;
 
           setDistance(calculatedDistanceInKm);
+          console.log(response.data.route);
         }
       }
     } catch (error) {
@@ -127,9 +128,9 @@ const DistanceCalculator = ({
       } else if (distance > 2) {
         setErrorMessage(""); // Clear error message if any
         setModeOfTravel(
-          // "bike 🚴‍♂️Safety Reminder: When biking, please ensure your headphones are at a safe volume to stay aware of your surroundings. Your safety is important!"
           <p>
-            bike 🚴‍♂️{" "}
+            you bike 🚴‍♂️!{" "}
+            <br></br>
             <span className="safety">
               **Safety Reminder: When biking, please ensure your headphones are
               at a safe volume to stay aware of your surroundings. Your safety
@@ -139,7 +140,7 @@ const DistanceCalculator = ({
         );
       } else if (distance < 2) {
         setErrorMessage(""); // Clear error message if any
-        setModeOfTravel("walk 🚶‍♂️.");
+        setModeOfTravel("you take a walk 🚶‍♂️!");
       }
     } else {
       // clear all states related.
@@ -387,8 +388,7 @@ const DistanceCalculator = ({
       {modeOfTravel === "" ? null : (
         <p className="travelSuggestion">
           if you want to listen to{" "}
-          <span className="chosen">{currentPodcast.title_original}</span> then
-          you should {modeOfTravel}{" "}
+          <span className="chosen">{currentPodcast.title_original}</span>{" "}we suggest that {modeOfTravel}{" "}
         </p>
       )}
     </>

@@ -1,20 +1,32 @@
-#root{
-    --inputPadding: 0.5rem 0;
-    --inputBottomBorder:1px solid rgb(237, 237, 237);
+#root {
+  --inputPadding: 0.5rem;
+  --inputBottomBorder: 1px solid rgb(237, 237, 237);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
 }
 
-body{
-    background-color:#001e31;
-    color: white;
-    font-family: 'Lato', sans-serif;
+body {
+  display: flex;
+  justify-content: center;
+  background-color: #001e31;
+  color: white;
+  font-family: "Lato", sans-serif;
+  width: 100%;
 }
-button{
-    font-family: 'Lato', sans-serif; 
+button {
+  font-family: "Lato", sans-serif;
 }
-h1,h2,h3,h4{
-    font-family: 'Nova Flat', cursive;
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Nova Flat", cursive;
 }
-button{
-    background-color:#D3CFE6;
-    color: black;
+button {
+  background-color: #d3cfe6;
+  color: black;
 }
