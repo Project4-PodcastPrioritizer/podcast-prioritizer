@@ -2,6 +2,7 @@ import { useState } from "react";
 import Prioritizer from "./components/Prioritizer";
 import Header from "./components/Header";
 import AppBrief from "./components/AppBrief";
+import Footer from "./components/Footer";
 
 function App() {
   const [podcastSearchTerm, setPodcastSearchTerm] = useState("");
@@ -29,6 +30,7 @@ function App() {
         end={endLocation}
       />
       <AppBrief />
+      <Footer />
     </>
   );
 }

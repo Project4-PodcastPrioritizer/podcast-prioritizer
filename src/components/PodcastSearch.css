@@ -161,6 +161,10 @@ h3 {
 /* Search Dialog */
 
 dialog {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   z-index: 2;
   padding: 0.5rem;
   color: white;
@@ -171,6 +175,10 @@ dialog {
 dialog button {
   margin-bottom: 1rem;
   background-color: white;
+  margin: 0 auto;
+  border-radius: 15px;
+  border: none;
+  padding: 5px;
 }
 
 dialog button:hover,
@@ -183,6 +191,4 @@ dialog button:target {
   border: solid 2px pink;
 }
 
-@media (min-width: 1080px) {
 
-}

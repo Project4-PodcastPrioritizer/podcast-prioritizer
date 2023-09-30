@@ -7,7 +7,7 @@ import "./Prioritizer.css";
 
 const Prioritizer = ({
   searchTerm,
-  setSearchTerm, 
+  setSearchTerm,
   distance,
   currentPodcast,
   setPodcast,
@@ -17,9 +17,8 @@ const Prioritizer = ({
   start,
   end,
   setStart,
-  setEnd
+  setEnd,
 }) => {
-
   // MOUNTING STATE
   const [isVisible, setIsVisible] = useState(false);
   const mountedTransition = useTransition(isVisible, {
@@ -29,17 +28,17 @@ const Prioritizer = ({
     leave: { x: 0, y: 0, opacity: 0 },
   });
 
-useEffect(()=>{
-  if (currentPodcast.length !== 0) {
-    console.log("true")
-    setIsVisible(true);
-  } else{
-    setIsVisible(false);
-  }
-},[currentPodcast])
+  useEffect(() => {
+    if (currentPodcast.length !== 0) {
+      console.log("true");
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  }, [currentPodcast]);
 
   return (
-    <div className="app">
+    <div className="app wrapper">
       <PodcastSearch
         setPodcast={setPodcast}
         setLength={setLength}
@@ -48,12 +47,11 @@ useEffect(()=>{
         setSearchTerm={setSearchTerm}
       />
 
-      {currentPodcast.length !== 0 ?
-      
-      (
+      {currentPodcast.length !== 0 ? (
         <>
-          <button className="changeSelectionButton"
-          // reset all states.
+          <button
+            className="changeSelectionButton"
+            // reset all states.
             onClick={() => {
               setPodcast([]);
               setLength("");
@@ -65,25 +63,38 @@ useEffect(()=>{
           >
             Change Podcast
           </button>
-          {mountedTransition((style,item) =>
+          {mountedTransition((style, item) =>
             item ? (
               <animated.div style={style} className="selected">
-              <img src={currentPodcast.image} className="thumbnail" />
-              <p className="podcastTitle">{currentPodcast.podcast_title_original}</p>
-              <p className="episode">{currentPodcast.title_original}</p>
-              <p className="publisher">{currentPodcast.publisher_original}</p>
-              <ul className="links">
-                <li title="Listen to this podcast">
-                  <a href={currentPodcast.link}><img src="/assets/listen-to.svg" alt="Listen To this podcast!" /></a>
-                </li>
-                <li title="Learn more about this podcast"><a href={currentPodcast.listennotes_url}><img src="/assets/about.svg" alt="Learn more about this podcast over at ListenNotes" /></a></li>
-              </ul>
-          </animated.div>
-            ):null
+                <img src={currentPodcast.image} className="thumbnail" />
+                <p className="podcastTitle">
+                  {currentPodcast.podcast_title_original}
+                </p>
+                <p className="episode">{currentPodcast.title_original}</p>
+                <p className="publisher">{currentPodcast.publisher_original}</p>
+                <ul className="links">
+                  <li title="Listen to this podcast">
+                    <a href={currentPodcast.link} target="blank">
+                      <img
+                        src="/assets/listen-to.svg"
+                        alt="Listen To this podcast!"
+                      />
+                    </a>
+                  </li>
+                  <li title="Learn more about this podcast">
+                    <a href={currentPodcast.listennotes_url} target="blank">
+                      <img
+                        src="/assets/about.svg"
+                        alt="Learn more about this podcast over at ListenNotes"
+                      />
+                    </a>
+                  </li>
+                </ul>
+              </animated.div>
+            ) : null
           )}
         </>
-      ) 
-      : null}
+      ) : null}
       <DistanceCalculator
         start={start}
         end={end}

@@ -4,7 +4,7 @@ import "./AppBrief.css";
 function AppBrief() {
   return (
     <>
-      <div className="app-description">
+      <div className="app-description wrapper">
         {/* <h2>The Ultimate Experience</h2> */}
         <h3>Welcome to Podcast Prioritizer</h3>
         <p>
