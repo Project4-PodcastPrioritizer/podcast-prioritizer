@@ -4,10 +4,7 @@ import "./Header.css";
 function Header() {
   return (
     <>
-
-    {/* this element is saying f you im gonna ruin the viewport sizing. */}
-      <img className="transition" src="/assets/layered-steps-haikei.svg" />
-      <div class="divider">
+      <div className="divider">
         <svg
           data-name="Layer 1"
           xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +13,7 @@ function Header() {
         >
           <path
             d="M598.97 114.72L0 0 0 120 1200 120 1200 0 598.97 114.72z"
-            class="shape-fill"
+            className="shape-fill"
           ></path>
         </svg>
       </div>

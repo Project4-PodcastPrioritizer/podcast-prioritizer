@@ -33,7 +33,7 @@ header img {
     height: 81px;
   }
   .divider .shape-fill {
-    fill: #d3cfe6;
+    fill: #161a293b;
   }
   .box {
     position: relative;
@@ -47,15 +47,7 @@ header img {
     padding-top: 2rem;
   }
   header img {
-    width: 30%;
+    width: 20%;
     margin-right: 60rem;
-  }
-/* This should not be increasing the viewport width!! */
-  .transition {
-    position: absolute;
-    width: 100%;
-    z-index: -1;
-    top: 28%;
-    overflow: hidden;
   }
 }

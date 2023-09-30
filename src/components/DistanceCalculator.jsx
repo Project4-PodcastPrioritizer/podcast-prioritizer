@@ -81,7 +81,6 @@ const DistanceCalculator = ({
           const calculatedDistanceInKm = calculatedDistanceInMiles * 1.60934;
 
           setDistance(calculatedDistanceInKm);
-          console.log(response.data.route);
         }
       }
     } catch (error) {
@@ -119,17 +118,16 @@ const DistanceCalculator = ({
   };
 
   useEffect(() => {
-    if (start && end && distance) {
+    if (start && end && distance >= 0)  {
       if (currentPodcast.length !== undefined) {
-        console.log(currentPodcast.length);
-        console.log("there is a selected podcast now");
         setModeOfTravel(""); // Clear modeOfTravel if any
         setErrorMessage("Please search for a podcast to listen to!");
+
       } else if (distance > 2) {
         setErrorMessage(""); // Clear error message if any
         setModeOfTravel(
           <p>
-            you bike 🚴‍♂️!{" "}
+             Enjoy a ride on a bike 🚴‍♂️!{" "}
             <br></br>
             <span className="safety">
               **Safety Reminder: When biking, please ensure your headphones are
@@ -140,7 +138,7 @@ const DistanceCalculator = ({
         );
       } else if (distance < 2) {
         setErrorMessage(""); // Clear error message if any
-        setModeOfTravel("you take a walk 🚶‍♂️!");
+        setModeOfTravel("Enjoy listening on your walk 🚶‍♂️!");
       }
     } else {
       // clear all states related.
@@ -269,9 +267,11 @@ const DistanceCalculator = ({
 
   useEffect(() => {
     if (!start && !end) {
-      setDistance("");
+      // setDistance("");
+      console.log("i triggered")
     }
   }, [start, end]);
+
   return (
     <>
       <form
@@ -388,7 +388,7 @@ const DistanceCalculator = ({
       {modeOfTravel === "" ? null : (
         <p className="travelSuggestion">
           if you want to listen to{" "}
-          <span className="chosen">{currentPodcast.title_original}</span>{" "}we suggest that {modeOfTravel}{" "}
+          <span className="chosen">{currentPodcast.title_original}</span>{" "}we suggest that you: {modeOfTravel}{" "}
         </p>
       )}
     </>
