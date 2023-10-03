@@ -1,32 +1,34 @@
-import { useState, useEffect } from 'react'
-import PodcastSearch from './components/PodcastSearch';
-import DistanceCalculator from './MapQuest';
+import { useState } from "react";
+import Prioritizer from "./components/Prioritizer";
 
-import './App.css'
-
-
-import Geolocation from './components/Geolocation.jsx'
+import "./App.css";
 
 function App() {
-  const [selectedPodcast,setSelectedPodcast] = useState([]);
-  const [podcastLength, setPodcaastLength] = useState("")
-
-  useEffect(()=>{
-    console.log("from app file " + selectedPodcast.podcast_title_original);
-    console.log("from app file " + podcastLength);
-  },[podcastLength,selectedPodcast])
+  const [podcastSearchTerm, setPodcastSearchTerm] = useState("");
+  const [selectedPodcast, setSelectedPodcast] = useState([]);
+  const [podcastLength, setPodcastLength] = useState("");
+  const [distance, setDistance] = useState(null);
+  const [startLocation, setStartLocation] = useState("");
+  const [endLocation, setEndLocation] = useState("");
 
   return (
     <>
-      <Geolocation />
-      <PodcastSearch setPodcast={setSelectedPodcast} setLength={setPodcaastLength} />
-
-      <div className='card'>
-        {/* Distance calculator component */}
-        <DistanceCalculator />
-      </div>
+      <Prioritizer
+        searchTerm ={podcastSearchTerm}
+        setSearchTerm={setPodcastSearchTerm}
+        distance={distance}
+        setPodcast={setSelectedPodcast}
+        currentPodcast={selectedPodcast}
+        setLength={setPodcastLength}
+        setDistance={setDistance}
+        podcastLength={podcastLength}
+        setStart={setStartLocation}
+        setEnd={setEndLocation}
+        start={startLocation}
+        end={endLocation}
+      />
     </>
-  )
+  );
 }
 
 export default App;
