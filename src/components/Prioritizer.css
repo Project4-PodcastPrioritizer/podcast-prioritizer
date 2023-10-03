@@ -3,26 +3,29 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 25px;
+  filter: drop-shadow(0px 1px 11px #000000);
 }
 
-.app button{
-  border-radius: 50px;
-  border: none;
+.app .changeSelectionButton{
+  background-color: #7e779d;
+  border: 2px solid #d3cfe6;
+  color: white;
   padding: .5rem;
+  border-radius: 20px;
   cursor: pointer;
   transition: .25s ease-in-out;
 }
-.app button:hover{
-  filter: brightness(75%);
+.app .changeSelectionButton:hover{
+  background-color: #d3cfe6;
+  border: 2px solid #7e779d;
+  color: black;
 }
-.selected{
-  display: flex;
-  justify-content: center;
-  margin: 1rem 0;
-}
-.selected div {
+.selected {
+  text-align: center;
+  margin: 1rem 0 1rem 0;
   font-weight: 600;
-  width: 90%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,20 +33,30 @@
   background-color: #262626;
   border-radius: 15px;
   color:  #d3cfe6;
-  padding: 1rem;
+  padding: .5rem;
 }
-.selected div p{
-  margin:0;
+
+.selected .podcastTitle{
+  margin: 0;
+  font-size: 1.5rem;
 }
-.selected div p:nth-child(3){
-  margin-bottom: 1rem;
+.selected .episode{
+  margin: .5rem 0 .5rem 0;
+  font-size: 1rem;
+  filter: grayscale(.75);
 }
-.selected div img{
-    width: 75%;
+.selected .publisher{
+  margin: 0;
+  font-size: 1rem;
+  filter: grayscale(.75);
+}
+.selected  img{
+    width: 70%;
     border-radius: 15px;
     margin:0 0 1rem 0;
 }
 .links{
+  margin: 0;
   padding: 0;
   display: flex;
   gap: 1rem;
@@ -52,8 +65,13 @@
   list-style: none;
   width: 75px;
 }
+.links li a{
+  display: flex;
+  justify-content: center;
+}
 .links li img{
-  width: 100%;
+  margin: 0;
+  width: 60%;
   transition: .2s ease-in-out;
 }
 
@@ -61,12 +79,24 @@
   filter: brightness(50%);
 }
 
-
-@media (max-width: 500px) {
-  .selected div{
-    padding: 1rem 1rem 0rem 1rem;
+@media (min-width: 1080px) {
+  .app{
+    background-color: #d3cfe6;
+    border: 2px solid #3b335d;
+    width: 45%;
+    order: 1;
+    padding:.5rem;
   }
-  .selected div img{
+  .selected{
+    text-align: center;
+    width: 15rem;
+    filter: drop-shadow(0px 1px 11px #000000);
+  }
+  .selected .links{
+    justify-content: center;
+    align-items: center;
+  }
+  .selected .links img{
     width: 60%;
   }
 }

@@ -118,34 +118,39 @@ const DistanceCalculator = ({
   };
 
   useEffect(() => {
-   if (start && end && distance) {
+    if (start && end && distance >= 0)  {
       if (currentPodcast.length !== undefined) {
-        console.log(currentPodcast.length)
-        console.log("there is a selected podcast now")
         setModeOfTravel(""); // Clear modeOfTravel if any
         setErrorMessage("Please search for a podcast to listen to!");
+
       } else if (distance > 2) {
         setErrorMessage(""); // Clear error message if any
         setModeOfTravel(
-          "bike 🚴‍♂️ Safety Reminder: When biking, please ensure your headphones are at a safe volume to stay aware of your surroundings. Your safety is important!"
+          <p>
+             Enjoy a ride on a bike 🚴‍♂️!{" "}
+            <br></br>
+            <span className="safety">
+              **Safety Reminder: When biking, please ensure your headphones are
+              at a safe volume to stay aware of your surroundings. Your safety
+              is important!**
+            </span>
+          </p>
         );
       } else if (distance < 2) {
         setErrorMessage(""); // Clear error message if any
-        setModeOfTravel("walk 🚶‍♂️.");
+        setModeOfTravel("Enjoy listening on your walk 🚶‍♂️!");
       }
     } else {
       // clear all states related.
-      setModeOfTravel(""); 
+      setModeOfTravel("");
       setErrorMessage("");
     }
   }, [start, end, distance, currentPodcast]);
-  
-  
-  // TODO FIX THIS!!!! NEEDS TO RENDER 
-    // SELECT PODCAST => WHEN NO PODCAST LENGTH OR CURRENT PODCAST.
-    // NULL => WHEN NO PODCAST AND STATES ARE EMPTY. 
 
-  
+  // TODO FIX THIS!!!! NEEDS TO RENDER
+  // SELECT PODCAST => WHEN NO PODCAST LENGTH OR CURRENT PODCAST.
+  // NULL => WHEN NO PODCAST AND STATES ARE EMPTY.
+
   useEffect(() => {
     // Function to fetch auto suggestions for start location
     const fetchStartSuggestions = async () => {
@@ -260,11 +265,13 @@ const DistanceCalculator = ({
     };
   }, [startLocationSuggestionsRef, endLocationSuggestionsRef]);
 
-  useEffect(()=>{
-    if(!start && !end ){
-      setDistance("")
+  useEffect(() => {
+    if (!start && !end) {
+      // setDistance("");
+      console.log("i triggered")
     }
-  },[start,end])
+  }, [start, end]);
+
   return (
     <>
       <form
@@ -380,8 +387,8 @@ const DistanceCalculator = ({
 
       {modeOfTravel === "" ? null : (
         <p className="travelSuggestion">
-          if you want to listen to {currentPodcast.title_original} then you
-          should {modeOfTravel}{" "}
+          if you want to listen to{" "}
+          <span className="chosen">{currentPodcast.title_original}</span>{" "}we suggest that you: {modeOfTravel}{" "}
         </p>
       )}
     </>

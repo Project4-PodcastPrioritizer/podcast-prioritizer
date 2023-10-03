@@ -3,22 +3,24 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 100%;
+  width: 85%;
   margin-bottom: 1rem;
+  max-height: fit-content;
+}
+.noBorder {
+  display: none;
 }
 
-
 .podcastSearchSubmit {
-  margin-right: 1rem;
   background-color: #7e779d;
   border: none;
   border-radius: 50px;
   transition: 0.15s ease-in;
-  padding: .05rem .5rem;
-  transition: .25s ease-in-out;
+  padding: 0.05rem 0.5rem;
+  transition: 0.25s ease-in-out;
 }
 
-.podcastSearchSubmit:hover svg path{
+.podcastSearchSubmit:hover svg path {
   /* color: rgb(47, 47, 47); */
   filter: brightness(75%);
 }
@@ -27,25 +29,35 @@
   cursor: pointer;
 }
 
-h3{
-    font-size: 1rem;
+h3 {
+  font-size: 1rem;
 }
 
 /* input field */
-.podcastSearch form{
+.podcastSearch form {
   display: flex;
   background-color: white;
   width: 100%;
+  border-radius: 15px;
 }
-#search{
+#search {
+  display: flex;
+  flex-wrap: wrap;
   width: 100%;
   border: none;
   padding: var(--inputPadding);
+  border-radius: 15px;
 }
 
 /* Results Container */
+.resultsContainer{
+  margin:1rem 0 1rem 0;
+  max-height: 30rem;
 
+}
 .resultsContainer ul {
+  height: 100%;
+
   display: flex;
   justify-content: center;
   list-style: none;
@@ -77,11 +89,10 @@ h3{
   justify-content: space-between;
   background-color: #262626;
   border-radius: 15px;
-  color:  #d3cfe6;
+  color: #d3cfe6;
   padding: 1rem;
   transition: 0.25s;
   filter: drop-shadow(1px 0px 4px black);
-
 }
 .results li .thumbnail {
   width: 8rem;
@@ -91,8 +102,22 @@ h3{
 
 .results li button {
   font-weight: 700;
-  padding: .4rem;
+  padding: 0.5rem;
   color: #262626;
+}
+
+.resultsContainer .results .podcastTitle {
+  font-size: 1.15rem;
+}
+.resultsContainer .results .episode {
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  filter: grayscale(0.7);
+}
+.resultsContainer .results .publisher {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  filter: grayscale(0.7);
 }
 .results p,
 .results h3 {
@@ -135,33 +160,35 @@ h3{
 
 /* Search Dialog */
 
-dialog{
+dialog {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   z-index: 2;
-  padding: .5rem;
+  padding: 0.5rem;
   color: white;
   background-color: #7e779d;
   border: 2px solid #d3cfe6;
   border-radius: 15px;
 }
-dialog button{
+dialog button {
   margin-bottom: 1rem;
   background-color: white;
+  margin: 0 auto;
+  border-radius: 15px;
+  border: none;
+  padding: 5px;
 }
 
-dialog button:hover, dialog button:focus, dialog button:target{
+dialog button:hover,
+dialog button:focus,
+dialog button:target {
   filter: brightness(75%);
 }
-dialog button:focus, dialog button:target{
+dialog button:focus,
+dialog button:target {
   border: solid 2px pink;
 }
 
-
-@media (max-width: 500px) {
-  .podcastSearch{
-    width: 80%;
-  }
-  dialog{
-    width: 60%;
-  }
-}
 

@@ -21,10 +21,10 @@ const PodcastSearch = ({ setPodcast, setLength, currentPodcast,searchTerm, setSe
   // MOUNTING STATES
   const [isVisible, setIsVisible] = useState(false);
   const mountedTransition = useTransition(isVisible, {
-    config: { duration: 200 }, // .2s animation time.
+    config: { duration: 100 }, // .2s animation time.
     from: { x: 0, y: -50, opacity: 0 },
     enter: { x: 0, y: 0, opacity: 1 },
-    leave: { x: 0, y: 50, opacity: 0 },
+    leave: { x: 0, y: 0, opacity: 0 },
   });
   
   // Refs
@@ -122,12 +122,10 @@ const PodcastSearch = ({ setPodcast, setLength, currentPodcast,searchTerm, setSe
       }
     }
   };
-  const podcastSelection = (event) => {
-    const indexValue = event.target.parentNode.getAttribute("data-index");
+  const podcastSelection = (e) => {
+    const indexValue = e.target.parentNode.getAttribute("data-index");
     setSelectedPodcast(podcastResults[indexValue]);
-    setPodcast(podcastResults[indexValue]); // pass selected podcast back up to parent (app.jsx)
-
-    //reset isVisible to empty to unRender the results ul
+    setPodcast(podcastResults[indexValue]); //pass selected podcast back up to parent (app.jsx)
     setIsVisible(false);
   };
   useEffect(()=>{
@@ -160,7 +158,7 @@ const PodcastSearch = ({ setPodcast, setLength, currentPodcast,searchTerm, setSe
             type="text"
             id="search"
             onChange={handleInputChange}
-            placeholder="Search Some Podcasts"
+            placeholder=" Search Some Podcasts"
           />
           <button onClick={handlePodcastGet} className="podcastSearchSubmit">{searchIcon}</button>
         </form>
@@ -178,8 +176,9 @@ const PodcastSearch = ({ setPodcast, setLength, currentPodcast,searchTerm, setSe
                 {podcastResults.map((result, index) => (
                   <li key={result.id} data-index={index}>
                     <img src={result.image} className="thumbnail" />
-                    <p>{result.podcast_title_original}</p>
-                    <p>{result.title_original}</p>
+                    <p className="podcastTitle">{result.podcast_title_original}</p>
+                    <p className="episode">{result.title_original}</p>
+                    <p className="publisher">{result.publisher_original}</p>
                     <button onClick={podcastSelection}>Select</button>
                   </li>
                 ))}

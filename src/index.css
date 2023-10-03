@@ -1,20 +1,42 @@
-#root{
-    --inputPadding: 0.5rem 0;
-    --inputBottomBorder:1px solid rgb(237, 237, 237);
+#root {
+  --inputPadding: 0.5rem;
+  --inputBottomBorder: 1px solid rgb(237, 237, 237);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  position: relative;
+}
+.wrapper{
+  max-width: 1200px;
 }
 
-body{
-    background-color:#001e31;
-    color: white;
-    font-family: 'Lato', sans-serif;
+body {
+  margin-top: 1rem;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #001e31;
+  color: white;
+  font-family: "Lato", sans-serif;
+  background-image: url(assets/layered-steps-haikei.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-button{
-    font-family: 'Lato', sans-serif; 
+button {
+  font-family: "Lato", sans-serif;
 }
-h1,h2,h3,h4{
-    font-family: 'Nova Flat', cursive;
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Nova Flat", cursive;
 }
-button{
-    background-color:#D3CFE6;
-    color: black;
+button {
+  background-color: #d3cfe6;
+  color: black;
 }

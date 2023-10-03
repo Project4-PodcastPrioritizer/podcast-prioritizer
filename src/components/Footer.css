@@ -1,0 +1,125 @@
+.footer {
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    order: 1;
+    background-color: #c7f3de04;
+    width: 100%;
+  }
+  .footer .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .container .contributors,
+  .container .madeWith {
+    max-width: 80%;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.59);
+  }
+
+  /* shared list styles*/
+  .container .contributors ul,
+  .container .madeWith ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+  }
+  .container .contributors a,
+  .container .madeWith a {
+    text-decoration: none;
+    color: white;
+  }
+
+  /* Contributers */
+
+  .madeBy {
+    font-size: 1.05rem;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+  }
+  .container .contributors .contributor {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 50%;
+    margin: 0 0 1rem 0;
+    gap: .5rem;
+  }
+  .container .contributors .links {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    margin: 0.4rem 0 0 0;
+    width: 100%;
+  }
+  .contributors .links a {
+    width: 20%;
+  }
+  .contributors .links img {
+    width: 100%;
+    border-radius: 5px;
+    margin: 0;
+    transform: skew(-10deg, 0deg);
+    filter: brightness(70%);
+    transition: .15s ease-in-out;
+  }
+
+  .contributors .contributor p {
+    margin: 0;
+    font-size: 1.05rem;
+    transform: skew(-10deg, 0deg);
+  }
+
+  /* Made With */
+  .container .madeWith ul {
+    flex-direction: row;
+    gap: 2rem;
+  }
+  .container .madeWith p {
+    flex-direction: row;
+    margin: .4rem 0 ;
+    gap: 2rem;
+  }
+  
+
+
+@media (min-width: 1080px) {
+  .container .contributors,
+  .container .madeWith {
+    max-width: 50%;
+  }
+  /* shared list styles*/
+  .container .contributors ul,
+  .container .madeWith ul {
+    flex-direction: row;
+  }
+  /* Contributers */
+  .container .contributors .contributor {
+    margin: 0 0 0.5rem 0;
+    gap: 0;
+  }
+  .contributors .links a {
+    width: 15%;
+  }
+  .contributors .links img:hover {
+    transform: skew(0deg, 0deg);
+    filter: brightness(100%);
+  }
+  /* Made With */
+  .container .madeWith ul {
+    gap: 2rem;
+  }
+  .container .madeWith ul p {
+    transform: skew(-10deg, 0deg);
+  }
+  .container .madeWith ul p:hover {
+    transform: skew(0deg, 0deg);
+  } 
+}
