@@ -146,13 +146,9 @@ const PodcastSearch = ({ setPodcast, setLength, currentPodcast,searchTerm, setSe
       setLoading(null);
     }
   }, [podcastResults]);
-useEffect(()=>{
-  console.log("check length " + currentPodcast.length);
-  console.log("check typeOf " + typeof(currentPodcast));
-},[currentPodcast]);
 
   return (
-    <div className={`podcastSearch ${typeof(currentPodcast) === 'object' ? "" : "noBorder"}`}>
+    <div className={`podcastSearch ${currentPodcast.length === undefined ? "noBorder" : ""}`}>
       {currentPodcast.length === 0 ? (
         <form action="submit">
           <label htmlFor="search" className="sr-only">
