@@ -147,7 +147,7 @@ const PodcastSearch = ({ setPodcast, setLength, currentPodcast,searchTerm, setSe
   }, [podcastResults]);
 
   return (
-    <div className={`podcastSearch ${selectedPodcast.length !== 0 ? 'noBorder' : ''}`}>
+    <div className={`podcastSearch ${typeof(currentPodcast) === 'object' ? "noBorder" : ""}`}>
       {currentPodcast.length === 0 ? (
         <form action="submit">
           <label htmlFor="search" className="sr-only">
