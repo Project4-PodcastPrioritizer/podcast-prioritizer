@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import { useTransition, animated } from "react-spring";
@@ -145,6 +146,10 @@ const PodcastSearch = ({ setPodcast, setLength, currentPodcast,searchTerm, setSe
       setLoading(null);
     }
   }, [podcastResults]);
+useEffect(()=>{
+  console.log("check length " + currentPodcast.length);
+  console.log("check typeOf " + typeof(currentPodcast));
+},[currentPodcast]);
 
   return (
     <div className={`podcastSearch ${typeof(currentPodcast) === 'object' ? "" : "noBorder"}`}>

@@ -264,14 +264,6 @@ const DistanceCalculator = ({
       document.removeEventListener("keydown", handleEnterKeyPress);
     };
   }, [startLocationSuggestionsRef, endLocationSuggestionsRef]);
-
-  useEffect(() => {
-    if (!start && !end) {
-      // setDistance("");
-      console.log("i triggered")
-    }
-  }, [start, end]);
-
   return (
     <>
       <form

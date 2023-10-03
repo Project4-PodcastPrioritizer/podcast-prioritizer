@@ -30,7 +30,6 @@ const Prioritizer = ({
 
   useEffect(() => {
     if (currentPodcast.length !== 0) {
-      console.log("true");
       setIsVisible(true);
     } else {
       setIsVisible(false);
