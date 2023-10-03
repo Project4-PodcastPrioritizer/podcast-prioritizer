@@ -4,7 +4,7 @@
 
 
 ***
-[Live site](https://celadon-kulfi-9167f8.netlify.app/): Podcast Prioritizer's main branch is being hosted by netlifty and is ready to use any time anywhere.
+[Live site](https://celadon-kulfi-9167f8.netlify.app/): Podcast Prioritizer's main branch is being hosted by netlify and is ready to use any time anywhere.
 
 
 
